@@ -4,6 +4,8 @@ var circle;
 var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com');
 var prevPoint = new Phaser.Point();
 
+firebase.remove();
+
 function preload() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
   game.stage.backgroundColor = '#0000FF';
@@ -19,7 +21,6 @@ function create() {
       var data = snapshot.val();
       var point = new Phaser.Point(data.x, data.y);
 
-      console.log(circle);
       circle.body.velocity = point;
   });
 
@@ -27,24 +28,25 @@ function create() {
 
 function update() {
   //circle.body.velocity.setTo(0,0);
-  var point = new Phaser.Point(),
+  var point = new Phaser.Point();
       speed = 200;
 
+      console.log('update');
 	if (input.upKey.isDown) {
-		point.y -= speed;
+		point.y = -speed;
 	}
 	if (input.downKey.isDown) {
-		point.y += speed;
+		point.y = speed;
 	}
 	if (input.leftKey.isDown) {
-	        point.x -= speed;
+	        point.x = -speed;
 	}
 	if (input.rightKey.isDown) {
-		point.x += speed;
+		point.x = speed;
 	}
 
-        circle.body.velocity = point;
-        if(prevPoint.x !== point.x || prevPoint.y !== point.y) {
+        if(prevPoint.x !== point.x || prevPoint.y !== point.y)
+        {
             firebase.push(point);
         }
 
