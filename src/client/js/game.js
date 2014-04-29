@@ -1,6 +1,7 @@
-var game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, create: create, update: update});
+var game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, create: create, update: update, render: render});
 var input;
 var circle;
+var shape;
 
 function preload() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -11,6 +12,9 @@ function preload() {
 function create() {
 	input = new Input(game);
   circle = game.add.sprite(400,300,'circleImg'); // (400,300) is the position
+
+	shape = Draw(3, 100, 100, 30);
+	
   game.physics.enable(circle, Phaser.Physics.ARCADE);
 }
 
@@ -28,4 +32,8 @@ function update() {
 	if (input.rightKey.isDown) {
 		circle.body.velocity.x += 200;
 	}
+}
+
+function render() {
+
 }
