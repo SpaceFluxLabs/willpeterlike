@@ -2,6 +2,10 @@ var game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, c
 var input;
 var circle;
 var shape;
+var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com');
+var prevPoint = new Phaser.Point();
+
+firebase.remove();
 
 function preload() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -16,24 +20,41 @@ function create() {
 	shape = Draw(3, 100, 100, 30);
 	
   game.physics.enable(circle, Phaser.Physics.ARCADE);
+
+  firebase.on('child_added', function(snapshot) {
+      var data = snapshot.val();
+      var point = new Phaser.Point(data.x, data.y);
+
+      circle.body.velocity = point;
+  });
+
 }
 
 function update() {
-  circle.body.velocity.setTo(0,0);
+  //circle.body.velocity.setTo(0,0);
+  var point = new Phaser.Point();
+      speed = 200;
+
+      console.log('update');
 	if (input.upKey.isDown) {
-		circle.body.velocity.y -= 200;
+		point.y = -speed;
 	}
 	if (input.downKey.isDown) {
-		circle.body.velocity.y += 200;
+		point.y = speed;
 	}
 	if (input.leftKey.isDown) {
-		circle.body.velocity.x -= 200;
+	        point.x = -speed;
 	}
 	if (input.rightKey.isDown) {
-		circle.body.velocity.x += 200;
+		point.x = speed;
 	}
+  if(prevPoint.x !== point.x || prevPoint.y !== point.y) {
+    firebase.push(point);
+  }
+    prevPoint = point;
 }
 
 function render() {
 
 }
+
