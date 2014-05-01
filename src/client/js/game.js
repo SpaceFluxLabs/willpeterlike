@@ -1,12 +1,15 @@
-var game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, create: create, update: update, render: render});
-var input;
+var game;
+var input; 
 var circle;
 var shape;
 var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim');
 var prevPoint = new Phaser.Point();
 var players = [];
 
-firebase.remove();
+firebase.remove(function() {
+  console.log('removed');
+  game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, create: create, update: update, render: render});
+});
 
 function preload() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -74,6 +77,8 @@ function update() {
     //firebase.push(point);
   }
     prevPoint = point;
+
+  console.log('update');
 }
 
 function render() {
