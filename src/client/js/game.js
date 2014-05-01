@@ -45,12 +45,12 @@ function create() {
     if(filter.length) {
       player = filter[0];
     } else {
-      player = new Player(Date.now(), game, firebase, false);
+      player = new Player(id, game, firebase, false);
+      players.push(player);
     }
 
     player.circle.body.velocity = point;
 
-    players.push(player);
     //circle.body.velocity = point;
   });
 
@@ -80,8 +80,6 @@ function update() {
     //firebase.push(point);
   }
     prevPoint = point;
-
-  console.log('update');
 }
 
 function render() {
