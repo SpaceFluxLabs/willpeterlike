@@ -31,8 +31,6 @@ var Player = (function(Phaser) {
 
   Player.prototype.setVelocity = function(x, y) {
 
-    console.log(this);
-
     this.velocity.x += x;
     this.velocity.y += y;
 

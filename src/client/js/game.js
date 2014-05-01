@@ -2,8 +2,9 @@ var game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, c
 var input;
 var circle;
 var shape;
-var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com');
+var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim');
 var prevPoint = new Phaser.Point();
+var players = [];
 
 firebase.remove();
 
@@ -20,19 +21,35 @@ function create() {
     leftKey : game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
     rightKey : game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
   };
-  circle = game.add.sprite(400,300,'circleImg'); // (400,300) is the position
+  //circle = game.add.sprite(400,300,'circleImg'); // (400,300) is the position
 
 	shape = Draw(100, 100, 3, 30, 0xFFFF00);
 	
-  game.physics.enable(circle, Phaser.Physics.ARCADE);
+  //game.physics.enable(circle, Phaser.Physics.ARCADE);
 
   firebase.on('child_added', function(snapshot) {
-      var data = snapshot.val();
-      var point = new Phaser.Point(data.x, data.y);
+    var data = snapshot.val();
+    var id = data.id;
+    var point = new Phaser.Point(data.point.x, data.point.y);
+    var filter = players.filter(function(item) {
+      return item.id === id;
+    });
+    var player;
 
-      circle.body.velocity = point;
+    if(filter.length) {
+      player = filter[0];
+    } else {
+      player = new Player(Date.now(), game, firebase, false);
+    }
+
+    player.circle.body.velocity = point;
+
+    players.push(player);
+    //circle.body.velocity = point;
   });
 
+  var player = new Player(Date.now(), game, firebase, true);
+  players.push(player);
 }
 
 function update() {
@@ -54,7 +71,7 @@ function update() {
 		point.x = speed;
 	}
   if(prevPoint.x !== point.x || prevPoint.y !== point.y) {
-    firebase.push(point);
+    //firebase.push(point);
   }
     prevPoint = point;
 }
