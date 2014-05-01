@@ -5,6 +5,8 @@ var Player = (function(Phaser) {
     this.id = id;
     this.firebase = firebase;
     this.velocity = new Phaser.Point();
+    this.circle = game.add.sprite(400, 300, 'circleImg');
+    game.physics.enable(this.circle, Phaser.Physics.ARCADE);
 
     // Register keyboard events
     
@@ -14,20 +16,22 @@ var Player = (function(Phaser) {
       , right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
       , speed = 200;
 
-    up.onDown.add(this.setVelocity.bind(0, -speed), this);
-    up.onUp.add(this.setVelocity.bind(0, speed), this);
-    down.onDown.add(this.setVelocity.bind(0, speed), this);
-    down.onUp.add(this.setVelocity.bind(0, -speed), this);
+    up.onDown.add(this.setVelocity.bind(this, 0, -speed));
+    up.onUp.add(this.setVelocity.bind(this, 0, speed));
+    down.onDown.add(this.setVelocity.bind(this, 0, speed));
+    down.onUp.add(this.setVelocity.bind(this, 0, -speed));
 
-    right.onDown.add(this.setVelocity.bind(speed, 0), this);
-    right.onUp.add(this.setVelocity.bind(-speed, 0), this);
-    left.onDown.add(this.setVelocity.bind(-speed, 0), this);
-    left.onUp.add(this.setVelocity.bind(speed, 0), this);
+    right.onDown.add(this.setVelocity.bind(this, speed, 0));
+    right.onUp.add(this.setVelocity.bind(this, -speed, 0));
+    left.onDown.add(this.setVelocity.bind(this, -speed, 0));
+    left.onUp.add(this.setVelocity.bind(this, speed, 0));
 
   }
 
 
   Player.prototype.setVelocity = function(x, y) {
+
+    console.log(this);
 
     this.velocity.x += x;
     this.velocity.y += y;
