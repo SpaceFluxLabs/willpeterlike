@@ -15,6 +15,9 @@ function preload() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
   game.stage.backgroundColor = '#0000FF';
   game.load.image('circleImg', 'assets/sprites/circle.jpg');
+
+  // Don't pause game if tab loses focus
+  game.stage.disableVisibilityChange = true;
 }
 
 function create() {
