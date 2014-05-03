@@ -17,7 +17,7 @@ function create() {
 	input = new Input(game);
   circle = game.add.sprite(400,300,'circleImg'); // (400,300) is the position
 
-	shape = Draw(3, 100, 100, 30);
+	shape = Draw(100, 100, 3, 30, 0xFFFF00);
 	
   game.physics.enable(circle, Phaser.Physics.ARCADE);
 
