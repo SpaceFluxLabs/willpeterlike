@@ -4,9 +4,10 @@ var TESTCircle;
 var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com');
 var prevPoint = new Phaser.Point();
 
-var players = new Array();
+var TESTFB = firebase.child('Wilbur');
+TESTFB.remove();
 
-firebase.remove();
+var players = new Array();
 
 function preload() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -15,6 +16,7 @@ function preload() {
 }
 
 function create() {
+
 	input = {
     upKey : game.input.keyboard.addKey(Phaser.Keyboard.UP),
     downKey : game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
@@ -32,6 +34,7 @@ function create() {
       TESTCircle.body.velocity = point;
   });
 
+  Player TESTPlayer = new Player();
 }
 
 function update() {
@@ -39,25 +42,25 @@ function update() {
   Draw(polygon);
   //console.log(polygon);
   //circle.body.velocity.setTo(0,0);
-  var point = new Phaser.Point();
-      speed = 200;
+ //  var point = new Phaser.Point();
+ //      speed = 200;
 
-	if (input.upKey.isDown) {
-		point.y = -speed;
-	}
-	if (input.downKey.isDown) {
-		point.y = speed;
-	}
-	if (input.leftKey.isDown) {
-	   point.x = -speed;
-	}
-	if (input.rightKey.isDown) {
-		point.x = speed;
-	}
-  if(prevPoint.x !== point.x || prevPoint.y !== point.y) {
-    firebase.push(point);
-  }
-  prevPoint = point;
+	// if (input.upKey.isDown) {
+	// 	point.y = -speed;
+	// }
+	// if (input.downKey.isDown) {
+	// 	point.y = speed;
+	// }
+	// if (input.leftKey.isDown) {
+	//    point.x = -speed;
+	// }
+	// if (input.rightKey.isDown) {
+	// 	point.x = speed;
+	// }
+ //  if(prevPoint.x !== point.x || prevPoint.y !== point.y) {
+ //    firebase.push(point);
+ //  }
+ //  prevPoint = point;
 }
 
 function render() {
