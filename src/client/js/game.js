@@ -40,7 +40,6 @@ function update() {
   var point = new Phaser.Point();
       speed = 200;
 
-      console.log('update');
 	if (input.upKey.isDown) {
 		point.y = -speed;
 	}
