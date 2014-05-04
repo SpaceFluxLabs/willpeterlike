@@ -14,7 +14,12 @@ function preload() {
 }
 
 function create() {
-	input = new Input(game);
+	input = {
+    upKey : game.input.keyboard.addKey(Phaser.Keyboard.UP),
+    downKey : game.input.keyboard.addKey(Phaser.Keyboard.DOWN),
+    leftKey : game.input.keyboard.addKey(Phaser.Keyboard.LEFT),
+    rightKey : game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
+  };
   circle = game.add.sprite(400,300,'circleImg'); // (400,300) is the position
 
 	shape = Draw(100, 100, 3, 30, 0xFFFF00);
