@@ -36,6 +36,7 @@ function create() {
 }
 
 function update() {
+  var polygon = new Polygon(0);
   //circle.body.velocity.setTo(0,0);
   var point = new Phaser.Point();
       speed = 200;
