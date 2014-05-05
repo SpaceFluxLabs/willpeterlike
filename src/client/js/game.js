@@ -1,8 +1,8 @@
-var game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, create: create, update: update, render: render});
-var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com');
+var game;
 var input; 
 var circle;
 var shape;
+var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim');
 var prevPoint = new Phaser.Point();
 var players = [];
 
