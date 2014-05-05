@@ -65,13 +65,14 @@ function create() {
 
   var player = new Player(Date.now(), game, firebase, true);
   players.push(player);
+  players[0].polygon.addSide();
 }
 
 function update() {
 }
 
 function render() {
-  for (var i = 0; i < players.length; i++) {
-    Draw(players[i].polygon);
-  }
+
+    Draw(players[0].polygon);
+
 }
