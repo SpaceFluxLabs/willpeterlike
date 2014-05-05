@@ -1,12 +1,11 @@
 //draw starting from top left corner
-function Draw(polygon){
+function Draw(p){
 	poly = game.add.graphics(0,0);
 	poly.lineStyle(2, 0x0000FF, 1);
-	poly.beginFill("#FF0000",1);
-	poly.moveTo(polygon.vertices[0].x, polygon.vertices[0].y);
-	for (var i = 1; i < polygon.vertices.length; ++i) {
-    poly.lineTo(polygon.vertices[i].x, polygon.vertices[i].y);
+	poly.beginFill(p.color,1);
+	poly.moveTo(p.x + p.radius, p.y);
+	for(var i = 1; i < p.sides; i++){
+	  poly.lineTo(p.x + p.radius * Math.cos(2*Math.PI*i/p.sides), p.y + p.radius * Math.sin(2*Math.PI*i/p.sides));
 	}
 	poly.endFill();
-	return poly;
 }
