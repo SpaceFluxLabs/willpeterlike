@@ -5,8 +5,7 @@ var Player = (function(Phaser) {
     this.velocity = new Phaser.Point();
     //this.circle = game.add.sprite(400, 300, 'circleImg');
     //game.physics.enable(this.circle, Phaser.Physics.ARCADE);
-    this.polygon = new Polygon(0,0,3,100,"#FF0000");
-
+    this.polygon = new Polygon(0,0,5,100,"#FF0000");
     var up, down, left, right
       , speed = 10;
     // Register keyboard events
@@ -16,6 +15,9 @@ var Player = (function(Phaser) {
       down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN)
       left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT)
       right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
+      grow = game.input.keyboard.addKey(Phaser.Keyboard.Q)
+      shrink = game.input.keyboard.addKey(Phaser.Keyboard.A)
+
 
       up.onDown.add(this.setVelocity.bind(this, 0, -speed));
       up.onUp.add(this.setVelocity.bind(this, 0, speed));
@@ -27,6 +29,8 @@ var Player = (function(Phaser) {
       left.onDown.add(this.setVelocity.bind(this, -speed, 0));
       left.onUp.add(this.setVelocity.bind(this, speed, 0));
 
+      grow.onDown.add(this.polygon.addSide);
+      shrink.onDown.add(this.polygon.removeSide);
     }
   }
 
