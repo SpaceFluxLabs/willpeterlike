@@ -4,7 +4,7 @@ var shape;
 var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim');
 var prevPoint = new Phaser.Point();
 var players = [];
-
+var cb;
 var handle1;
 var handle2;
 var line1;
@@ -39,7 +39,14 @@ function create() {
   line1 = new Phaser.Line(handle1.x, handle1.y, handle2.x, handle2.y);
   //circle = game.add.sprite(400,300,'circleImg'); // (400,300) is the position
 
-	shape = Draw(100, 100, 3, 30, 0xFFFF00);
+  cb = game.add.bitmapData(200, 200);
+
+
+  console.log(cb.circle);
+  console.log(cb);
+  cb.circle(50, 50, 25, '#FFFFFF');
+
+//	shape = Draw(100, 100, 3, 30, 0xFFFF00);
 	
   //game.physics.enable(circle, Phaser.Physics.ARCADE);
 
@@ -59,11 +66,11 @@ function create() {
       players.push(player);
     }
 
-    //player.circle.body.velocity = point;
+    player.circle.body.velocity = point;
     player.polygon.translate(point.x, point.y);
   });
 
-  var player = new Player(Date.now(), game, firebase, true);
+  var player = new Player(Date.now(), game, firebase, cb, true);
   players.push(player);
   players[0].polygon.addSide();
 }
