@@ -49,8 +49,8 @@ function create() {
       players.push(player);
     }
 
-    player.circle.body.velocity = point;
-
+    //player.circle.body.velocity = point;
+    player.polygon.translate(point.x, point.y);
     //circle.body.velocity = point;
   });
 
@@ -59,8 +59,7 @@ function create() {
 }
 
 function update() {
-  var polygon = new Polygon(0);
-  //circle.body.velocity.setTo(0,0);
+  Draw(players[0].polygon);
   var point = new Phaser.Point();
       speed = 200;
 

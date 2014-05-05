@@ -5,9 +5,10 @@ var Player = (function(Phaser) {
     this.velocity = new Phaser.Point();
     this.circle = game.add.sprite(400, 300, 'circleImg');
     game.physics.enable(this.circle, Phaser.Physics.ARCADE);
+    this.polygon = new Polygon(0,0,3,100,"#FF0000");
 
     var up, down, left, right
-      , speed = 200;
+      , speed = 10;
     // Register keyboard events
     
     if(shouldListen) {
