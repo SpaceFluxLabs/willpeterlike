@@ -18,7 +18,6 @@ var Player = (function(Phaser) {
       grow = game.input.keyboard.addKey(Phaser.Keyboard.Q)
       shrink = game.input.keyboard.addKey(Phaser.Keyboard.A)
 
-
       up.onDown.add(this.setVelocity.bind(this, 0, -speed));
       up.onUp.add(this.setVelocity.bind(this, 0, speed));
       down.onDown.add(this.setVelocity.bind(this, 0, speed));
@@ -29,8 +28,8 @@ var Player = (function(Phaser) {
       left.onDown.add(this.setVelocity.bind(this, -speed, 0));
       left.onUp.add(this.setVelocity.bind(this, speed, 0));
 
-      grow.onDown.add(this.polygon.addSide);
-      shrink.onDown.add(this.polygon.removeSide);
+      grow.onDown.add(this.polygon.addSide.bind(this.polygon));
+      shrink.onDown.add(this.polygon.removeSide.bind(this.polygon));
     }
   }
 

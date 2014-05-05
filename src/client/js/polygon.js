@@ -17,15 +17,12 @@ var Polygon = (function() {
   }
 
   Polygon.prototype.addSide = function() {
-    console.log("add:" + this.sides);
     this.sides += 1;
-    console.log("add:" + this.sides);
   }
 
   //Make sure polygon has at least 3 sides
   Polygon.prototype.removeSide = function(){
     this.sides > 3 ? this.sides-= 1 : this.sides = 3;
-    console.log("remove:" + this.sides);
   }
 
   return Polygon;
