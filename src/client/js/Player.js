@@ -1,9 +1,6 @@
 var Player = (function(Phaser) {
 
   function Player(id, game, firebase) {
-
-    console.log("lol");
-
     this.id = id;
     this.firebase = firebase;
     this.velocity = new Phaser.Point();
@@ -48,4 +45,3 @@ var Player = (function(Phaser) {
   return Player;
 
 })(Phaser);
-
