@@ -11,7 +11,7 @@ var line1;
 
 firebase.remove(function() {
   console.log('removed');
-  game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, create: create, update: update, render: render});
+  game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, create: create, update: update, render: render});  
 });
 
 function preload() {
