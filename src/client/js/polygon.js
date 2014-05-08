@@ -1,10 +1,9 @@
 var Polygon = (function() {
-  function Polygon(x, y, sides, radius, color) {
-  	this.x = x;
-  	this.y = y;
-  	this.sides = sides;
+  function Polygon(x, y, sides, radius) {
+    this.x = x;
+    this.y = y;
+    this.sides = sides;
     this.radius = radius;
-  	this.color = color;
   }
 
   Polygon.prototype.translate = function (dx, dy) {
