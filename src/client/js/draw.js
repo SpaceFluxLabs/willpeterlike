@@ -1,6 +1,6 @@
 //draw starting from top left corner
 function Draw(p){
-  game.context.strokeStyle = 'rgb(0,0,0)';
+  game.context.strokeStyle = 'rgb(50,0,0)';
   game.context.beginPath();
 	game.context.moveTo(p.x + p.radius, p.y);
 	for(var i = 1; i < p.sides + 1; i++){

@@ -3,13 +3,13 @@ var Player = (function(Phaser) {
     this.id = id;
     this.firebase = firebase;
     this.velocity = new Phaser.Point();
-    //this.circle = game.add.sprite(400, 300, 'circleImg');
-    //game.physics.enable(this.circle, Phaser.Physics.ARCADE);
-    this.polygon = new Polygon(0,0,3,100,"#FF0000");
+    this.circle = game.add.sprite(100, 300, 'circleImg');
+    game.physics.enable(this.circle, Phaser.Physics.ARCADE);
+    this.polygon = new Polygon(0,0,3,100,"#FFFFFF");
     var up, down, left, right
-      , speed = 50;
-    
+      , speed = 50;    
     // Register keyboard events  
+
     if(shouldListen) {
       up = game.input.keyboard.addKey(Phaser.Keyboard.UP)
       down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN)
