@@ -18,9 +18,9 @@ var Player = (function(Phaser) {
     bitmap = game.add.bitmapData(200, 200);
     bitmap.polygon(polygon, '#FFFFFF');
 
-    this.circle = game.add.sprite(400, 300, bitmap);
-    game.physics.enable(this.circle, Phaser.Physics.ARCADE);
-    this.polygon = new Polygon(0,0,3,100,"#FFFFFF");
+    this.sprite = game.add.sprite(400, 300, bitmap);
+    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.polygon = new Polygon(0,0,3,100);
       
     // Register keyboard events
     if(shouldListen) {

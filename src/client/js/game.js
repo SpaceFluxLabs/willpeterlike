@@ -33,7 +33,7 @@ function create() {
       players.push(player);
     }
 
-    player.circle.body.velocity = point;
+    player.sprite.body.velocity = point;
   });
 
   var player = new Player(Date.now(), game, firebase,  true);
