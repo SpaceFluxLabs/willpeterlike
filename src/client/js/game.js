@@ -40,13 +40,9 @@ function create() {
   //circle = game.add.sprite(400,300,'circleImg'); // (400,300) is the position
 
   cb = game.add.bitmapData(200, 200);
-
-
   console.log(cb.circle);
   console.log(cb);
   cb.circle(50, 50, 25, '#FFFFFF');
-
-//	shape = Draw(100, 100, 3, 30, 0xFFFF00);
 	
   //game.physics.enable(circle, Phaser.Physics.ARCADE);
 
@@ -62,7 +58,7 @@ function create() {
     if(filter.length) {
       player = filter[0];
     } else {
-      player = new Player(id, game, firebase, false);
+      player = new Player(id, game, firebase, cb, false);
       players.push(player);
     }
 
@@ -79,7 +75,5 @@ function update() {
 }
 
 function render() {
-
     Draw(players[0].polygon);
-
 }

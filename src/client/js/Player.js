@@ -8,8 +8,8 @@ var Player = (function(Phaser) {
     this.polygon = new Polygon(0,0,3,100,"#FF0000");
     var up, down, left, right
       , speed = 50;
-    // Register keyboard events
     
+    // Register keyboard events  
     if(shouldListen) {
       up = game.input.keyboard.addKey(Phaser.Keyboard.UP)
       down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN)
