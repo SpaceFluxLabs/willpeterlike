@@ -10,8 +10,7 @@ var handle2;
 var line1;
 
 firebase.remove(function() {
-  console.log('removed');
-  game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, create: create, update: update, render: render});  
+  game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, create: create, });  
 });
 
 function preload() {
@@ -74,11 +73,3 @@ function create() {
   players.push(player);
 }
 
-function update() {
-}
-
-function render() {
-  for (var i = 0; i < players.length; i++) {
-    Draw(players[i].polygon);
-  }
-}
