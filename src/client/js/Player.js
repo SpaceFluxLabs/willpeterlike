@@ -1,14 +1,25 @@
 var Player = (function(Phaser) {
-  function Player(id, game, firebase, cb,  shouldListen) {
+  function Player(id, game, firebase,  shouldListen) {
+
+    var up
+      , down
+      , left
+      , right
+      , grow
+      , shrink
+      , speed = 100
+      , bitmap = game.add.bitmapData(200, 200)
+
     this.id = id;
     this.firebase = firebase;
     this.velocity = new Phaser.Point();
-    this.circle = game.add.sprite(100, 300, 'circleImg');
-    game.physics.enable(this.circle, Phaser.Physics.ARCADE);
-    this.polygon = new Polygon(0,0,3,100,"#FFFFFF");
-    var up, down, left, right
-      , speed = 50;    
-    // Register keyboard events  
+    this.polygon = new Polygon(100,100,3,50, '#FFFFFF');
+
+    bitmap.polygon(this.polygon, '#FFFFFF');
+    this.sprite = game.add.sprite(400, 300, bitmap);
+    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+      
+    // Register keyboard events
 
     if(shouldListen) {
       up = game.input.keyboard.addKey(Phaser.Keyboard.UP)
@@ -28,11 +39,13 @@ var Player = (function(Phaser) {
       left.onDown.add(this.setVelocity.bind(this, -speed, 0));
       left.onUp.add(this.setVelocity.bind(this, speed, 0));
 
+ 
       grow.onDown.add(this.polygon.addSide.bind(this.polygon));
+      grow.onDown.add(this.draw.bind(this, bitmap, game));
       shrink.onDown.add(this.polygon.removeSide.bind(this.polygon));
+      shrink.onDown.add(this.draw.bind(this, bitmap, game));
     }
   }
-
 
   Player.prototype.setVelocity = function(x, y) {
 
@@ -45,6 +58,13 @@ var Player = (function(Phaser) {
     });
 
   };
+  
+  Player.prototype.draw = function(bm, game) {
+
+    bm.clear();
+    bm.polygon(this.polygon, '#FFFFFF');
+
+  }
 
   return Player;
 
