@@ -20,6 +20,7 @@ var Player = (function(Phaser) {
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
       
     // Register keyboard events
+
     if(shouldListen) {
       up = game.input.keyboard.addKey(Phaser.Keyboard.UP)
       down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN)
