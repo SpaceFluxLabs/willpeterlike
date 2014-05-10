@@ -14,13 +14,14 @@ var Player = (function(Phaser) {
     this.id = id;
     this.firebase = firebase;
     this.velocity = new Phaser.Point();
+    this.polygon = new Polygon(100,100,3,50, '#FFFFFF');
+
 
     bitmap = game.add.bitmapData(200, 200);
-    bitmap.polygon(polygon, '#FFFFFF');
-
+    bitmap.polygon(this.polygon, '#FFFFFF');
     this.sprite = game.add.sprite(400, 300, bitmap);
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    this.polygon = new Polygon(0,0,3,100);
+
       
     // Register keyboard events
     if(shouldListen) {
@@ -41,8 +42,11 @@ var Player = (function(Phaser) {
       left.onDown.add(this.setVelocity.bind(this, -speed, 0));
       left.onUp.add(this.setVelocity.bind(this, speed, 0));
 
+ 
       grow.onDown.add(this.polygon.addSide.bind(this.polygon));
+      grow.onDown.add(this.draw.bind(this, game));
       shrink.onDown.add(this.polygon.removeSide.bind(this.polygon));
+      shrink.onDown.add(this.draw.bind(this, game));
     }
   }
 
@@ -58,6 +62,18 @@ var Player = (function(Phaser) {
     });
 
   };
+  
+  Player.prototype.draw = function(game) {
+    //remember old coordinates
+    var x = this.sprite.x;
+    var y = this.sprite.y;
+    this.sprite.destroy();
+    
+    var bm = game.add.bitmapData(200, 200);
+    bm.polygon(this.polygon, '#FFFFFF');
+    this.sprite = game.add.sprite(x, y, bm);
+    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+  }
 
   return Player;
 
