@@ -59,10 +59,10 @@ var Player = (function(Phaser) {
 
   };
   
-  Player.prototype.draw = function(bm, game) {
+  Player.prototype.draw = function(bitmap, game) {
 
-    bm.clear();
-    bm.polygon(this.polygon, '#FFFFFF');
+    bitmap.clear();
+    bitmap.polygon(this.polygon, '#FFFFFF');
 
   }
 
