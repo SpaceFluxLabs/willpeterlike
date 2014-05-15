@@ -8,17 +8,16 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       , grow
       , shrink
       , speed = 100
-      , bitmap = game.add.bitmapData(100, 100)
-
-    this.bitmap = bitmap;
+    
+    this.bitmap = game.add.bitmapData(100, 100)
     this.type = "Player";
     this.id = id;
     this.firebase = firebase;
     this.velocity = new Phaser.Point();
-    this.polygon = new Polygon(50,50,3,50, '#FFFFFF');
+    this.polygon = new Polygon(50,50,4,50, '#FFFFFF');
 
-    bitmap.polygon(this.polygon, '#FFFFFF');
-    this.sprite = game.add.sprite(100, 100, bitmap);
+    this.bitmap.polygon(this.polygon, '#FFFFFF');
+    this.sprite = game.add.sprite(100, 100, this.bitmap);
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
       
     // Register keyboard events
@@ -43,9 +42,10 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
 
  
       grow.onDown.add(this.polygon.addSide.bind(this.polygon));
-      grow.onDown.add(this.draw.bind(this, bitmap, game));
+      grow.onDown.add(this.draw.bind(this, this.bitmap, game));
+      shrink.onDown.add(this.shoot.bind(this));
       shrink.onDown.add(this.polygon.removeSide.bind(this.polygon));
-      shrink.onDown.add(this.draw.bind(this, bitmap, game));
+      shrink.onDown.add(this.draw.bind(this, this.bitmap, game));
     }
   }
 
@@ -61,6 +61,16 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     });
 
   };
+
+  Player.prototype.shoot = function() {
+    if (this.polygon.numSides() > 3) {
+      var linePos = new Phaser.Point(this.sprite.body.x + 150, this.sprite.body.y);
+      this.firebase.push({
+        type: "Line",
+        point: linePos
+      }) 
+    }
+  }
 
   Player.prototype.grow = function() {
     this.polygon.addSide();
