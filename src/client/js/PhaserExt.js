@@ -19,7 +19,8 @@ define(['Phaser'], function(Phaser) {
     this.context.moveTo(p.x + p.radius, p.y);
 
     for (var i =1; i < p.sides + 1; i++) {
-      this.context.lineTo(p.x + p.radius * Math.cos(2*Math.PI*i/p.sides), p.y + p.radius * Math.sin(2*Math.PI*i/p.sides));
+      var theta = 2*Math.PI*i/p.sides;
+      this.context.lineTo(p.x + p.radius * Math.cos(theta), p.y + p.radius * Math.sin(theta));
     }
 
     this.context.closePath();

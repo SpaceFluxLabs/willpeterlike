@@ -8,7 +8,7 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       , grow
       , shrink
       , speed = 100
-      , bitmap = game.add.bitmapData(200, 200)
+      , bitmap = game.add.bitmapData(200, 200);
 
     this.id = id;
     this.firebase = firebase;
