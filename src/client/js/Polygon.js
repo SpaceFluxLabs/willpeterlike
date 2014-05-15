@@ -1,4 +1,4 @@
-var Polygon = (function() {
+define(function() {
   function Polygon(x, y, sides, radius) {
     this.x = x;
     this.y = y;
@@ -25,4 +25,4 @@ var Polygon = (function() {
   }
 
   return Polygon;
-}());
+});
