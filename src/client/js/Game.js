@@ -64,10 +64,6 @@ define(['Phaser',
     players.push(player);
   }
 
-  function growHandler (obj1, obj2) {
-    console.log("grow!");
-  }
-
   function update() {
     var i,
         line
