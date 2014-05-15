@@ -1,5 +1,4 @@
 define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) {
-  console.log("Polygon:", Polygon);
   function Player(id, game, firebase,  shouldListen) {
 
     var up
@@ -66,7 +65,6 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     bitmap.polygon(this.polygon, '#FFFFFF');
 
   }
-  console.log("DUDE:", Player);
 
   return Player;
 });

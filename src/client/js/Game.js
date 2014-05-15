@@ -7,7 +7,6 @@ define(['Phaser',
   var game;
   var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim');
   var players = [];
-  console.log('player:', Player);
 
   firebase.remove(function() {
     game = new Phaser.Game(800,600,Phaser.CANVAS, 'phaser', {preload: preload, create: create, });  
