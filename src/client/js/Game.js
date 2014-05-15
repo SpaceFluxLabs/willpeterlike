@@ -62,9 +62,6 @@ define(['Phaser',
     var player = new Player(Date.now(), game, firebase,  true);
     thisPlayer = player;
     players.push(player);
-
-    var line = new Line(game, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0)
-    lines.push(line);
   }
 
   function growHandler (obj1, obj2) {
@@ -72,19 +69,24 @@ define(['Phaser',
   }
 
   function update() {
-    var i;
+    var i,
+        line
+    ;
 
-    for (var i = 0; i < lines.length; i++) {
-      lines[i].sprite.rotation += 0.02;
+    if ((Math.random() * 100 | 0) == 0) {
+      line = new Line(game, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0)
+      lines.push(line);
     }
 
-    for (i in lines) {
-      game.physics.arcade.collide(thisPlayer.sprite, lines[i].sprite, troll);
+    for (i = 0; i < lines.length; i++) {
+      game.physics.arcade.collide(lines[i].sprite, thisPlayer.sprite, growHandler, null, this);
+      lines[i].sprite.rotation += 0.02;
     }
   }
 
-  function troll() {
-    console.log("meow!");
+  function growHandler (obj1, obj2) {
+    obj1.destroy();
+    thisPlayer.grow();
   }
 
 });
