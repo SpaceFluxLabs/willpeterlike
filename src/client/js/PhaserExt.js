@@ -19,11 +19,27 @@ define(['Phaser'], function(Phaser) {
     this.context.moveTo(p.x + p.radius, p.y);
 
     for (var i =1; i < p.sides + 1; i++) {
-      this.context.lineTo(p.x + p.radius * Math.cos(2*Math.PI*i/p.sides), p.y + p.radius * Math.sin(2*Math.PI*i/p.sides));
+      var theta = 2*Math.PI*i/p.sides;
+      this.context.lineTo(p.x + p.radius * Math.cos(theta), p.y + p.radius * Math.sin(theta));
     }
 
     this.context.closePath();
     this.context.fill();
 
   };
+
+  Phaser.BitmapData.prototype.line = function(l, fillStyle) {
+    if (typeof fillStyle !== 'undefined') {
+      this.context.fillStyle = fillStyle;
+    }
+    var length = 50;
+    this.context.beginPath();
+    this.context.moveTo(0, 0);
+    this.context.lineTo(0, length);
+    this.context.lineTo(1, length);
+    this.context.lineTo(1, 0);
+    this.context.closePath();
+    this.context.fill();
+  };
+
 });

@@ -8,8 +8,9 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       , grow
       , shrink
       , speed = 100
-      , bitmap = game.add.bitmapData(200, 200)
+      , bitmap = game.add.bitmapData(200, 200);
 
+    this.type = "Player";
     this.id = id;
     this.firebase = firebase;
     this.velocity = new Phaser.Point();
@@ -18,6 +19,7 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     bitmap.polygon(this.polygon, '#FFFFFF');
     this.sprite = game.add.sprite(400, 300, bitmap);
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.sprite.body.colliderWorldBounds = true;
       
     // Register keyboard events
 
@@ -27,7 +29,7 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT)
       right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
       grow = game.input.keyboard.addKey(Phaser.Keyboard.Q)
-      shrink = game.input.keyboard.addKey(Phaser.Keyboard.A)
+      shrink = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
 
       up.onDown.add(this.setVelocity.bind(this, 0, -speed));
       up.onUp.add(this.setVelocity.bind(this, 0, speed));
@@ -54,6 +56,7 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
 
     this.firebase.push({
       id: this.id,
+      type: this.type,
       point: this.velocity
     });
 
