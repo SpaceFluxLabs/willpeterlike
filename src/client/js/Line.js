@@ -9,8 +9,8 @@ define(['Phaser'], function(Phaser) {
     this.sprite = game.add.sprite(x, y, bitmap);
     this.sprite.anchor.setTo(0.5,0.5);
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    this.sprite.body.collideWorldBounds = true;
-    this.sprite.body.bounce.set(1);
+
+    this.sprite.body.collideWorldBounds = false;
   }
 
   return Line;
