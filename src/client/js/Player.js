@@ -20,6 +20,7 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     bitmap.polygon(this.polygon, '#FFFFFF');
     this.sprite = game.add.sprite(100, 100, bitmap);
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    this.sprite.body.colliderWorldBounds = true;
       
     // Register keyboard events
 
