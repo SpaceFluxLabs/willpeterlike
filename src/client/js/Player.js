@@ -8,18 +8,18 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       , grow
       , shrink
       , speed = 100
-      , bitmap = game.add.bitmapData(200, 200)
+      , bitmap = game.add.bitmapData(100, 100)
 
+    this.bitmap = bitmap;
     this.type = "Player";
     this.id = id;
     this.firebase = firebase;
     this.velocity = new Phaser.Point();
-    this.polygon = new Polygon(100,100,3,50, '#FFFFFF');
+    this.polygon = new Polygon(50,50,3,50, '#FFFFFF');
 
     bitmap.polygon(this.polygon, '#FFFFFF');
-    this.sprite = game.add.sprite(400, 300, bitmap);
+    this.sprite = game.add.sprite(100, 100, bitmap);
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    this.sprite.body.colliderWorldBounds = true;
       
     // Register keyboard events
 
@@ -61,6 +61,12 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     });
 
   };
+
+  Player.prototype.grow = function() {
+    this.polygon.addSide();
+    this.bitmap.clear();
+    this.bitmap.polygon(this.polygon, '#FFFFFF');
+  }
   
   Player.prototype.draw = function(bitmap, game) {
 
