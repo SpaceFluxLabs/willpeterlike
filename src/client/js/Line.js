@@ -1,4 +1,4 @@
-var Line = (function(Phaser) {
+define(['Phaser'], function(Phaser) {
   function Line(game, x, y) {
     this.type = "Line";
     this.x = x;
@@ -13,11 +13,5 @@ var Line = (function(Phaser) {
     this.sprite.body.bounce.set(1);
   }
 
-
-
-  Line.prototype.line = function(bitmap, game) {
-    bitmap.clear();
-    bitmap.line(this, '#FFFFFF');
-  }
   return Line;
-})(Phaser);
+});

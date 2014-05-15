@@ -1,9 +1,14 @@
 define(['Phaser',
     'Firebase',
     'Player',
+    'Line',
     'PhaserExt'
     ],
-    function(Phaser, Firebase, Player) {
+    function(
+      Phaser,
+      Firebase,
+      Player,
+      Line) {
   var game;
   var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim');
   var players = [];
