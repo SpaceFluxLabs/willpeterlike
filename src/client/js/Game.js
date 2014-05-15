@@ -9,12 +9,14 @@ define(['Phaser',
       Firebase,
       Player,
       Line) {
-  var game;
-  var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim');
-  var players = [];
-  var lines = [];
-  var CANVAS_WIDTH = 800;
-  var CANVAS_HEIGHT = 600;
+  var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim'),
+      players = [],
+      lines = [],
+      CANVAS_WIDTH = 800,
+      CANVAS_HEIGHT = 600,
+      game,
+      thisPlayer
+  ;
 
   firebase.remove(function() {
     var divID = 'phaser';
@@ -58,22 +60,31 @@ define(['Phaser',
     });
 
     var player = new Player(Date.now(), game, firebase,  true);
+    thisPlayer = player;
     players.push(player);
 
     var line = new Line(game, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0)
     lines.push(line);
   }
 
+  function growHandler (obj1, obj2) {
+    console.log("grow!");
+  }
+
   function update() {
-    console.log(players.length);
-    game.physics.arcade.collide(players[0], lines[0]);
+    var i;
+
     for (var i = 0; i < lines.length; i++) {
       lines[i].sprite.rotation += 0.02;
     }
+
+    for (i in lines) {
+      game.physics.arcade.collide(thisPlayer.sprite, lines[i].sprite, troll);
+    }
   }
 
-  function growHandler (obj1, obj2) {
-    console.log("grow!");
+  function troll() {
+    console.log("meow!");
   }
 
 });
