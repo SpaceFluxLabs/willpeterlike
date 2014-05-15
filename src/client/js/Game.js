@@ -1,5 +1,9 @@
-(function() {
-
+define(['Phaser',
+    'Firebase',
+    'Player',
+    'PhaserExt'
+    ],
+    function(Phaser, Firebase, Player) {
   var game;
   var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim');
   var players = [];
@@ -41,4 +45,4 @@
     players.push(player);
   }
 
-})();
+});

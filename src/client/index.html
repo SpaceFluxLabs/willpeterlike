@@ -1,18 +1,18 @@
 <!doctype html>
 <html>
   <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <title>Will Peter Like</title>
   </head>
   <body>
     <div id="phaser">
     </div>
 
-  <script src='https://cdn.firebase.com/js/client/1.0.11/firebase.js'></script>
-  <script src="../../lib/phaser.js"></script>
-  <script src="js/PhaserExt.js"></script>
-  <script src="js/Player.js"></script>
-  <script src="js/game.js"></script>
-  <script src="js/polygon.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.11/require.min.js'></script>
+    <script src='js/requireConfig.js'></script>
+    <script>
+      require(['Game']);
+    </script>
   </body>
 
 </html>

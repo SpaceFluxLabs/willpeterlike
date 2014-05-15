@@ -1,4 +1,4 @@
-var Player = (function(Phaser) {
+define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) {
   function Player(id, game, firebase,  shouldListen) {
 
     var up
@@ -67,5 +67,4 @@ var Player = (function(Phaser) {
   }
 
   return Player;
-
-})(Phaser);
+});

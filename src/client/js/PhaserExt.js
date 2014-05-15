@@ -3,8 +3,7 @@
  * 
  */
 
-(function(Phaser) {
-
+define(['Phaser'], function(Phaser) {
   /** 
    * Draw a filled polygon to the BitmapData
    * @param {Polygon} p - the polygon to draw
@@ -27,5 +26,4 @@
     this.context.fill();
 
   };
-
-})(Phaser);
+});
