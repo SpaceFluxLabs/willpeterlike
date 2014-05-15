@@ -62,6 +62,12 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
 
   };
 
+  Player.prototype.shoot = function() {
+    this.firebase.push({
+      type: "Line"
+    })
+  }
+
   Player.prototype.grow = function() {
     this.polygon.addSide();
     this.bitmap.clear();
