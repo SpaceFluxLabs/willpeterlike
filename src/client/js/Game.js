@@ -54,7 +54,11 @@ define(['Phaser',
         player.sprite.body.velocity = point;
       }
       else if (type == "Line") {
-
+        var line;
+        var point = new Phaser.Point(data.point.x, data.point.y);
+        console.log(point);
+        line = new Line(game, point.x, point.y);
+        lines.push(line);
       }
 
     });
@@ -62,6 +66,10 @@ define(['Phaser',
     var player = new Player(Date.now(), game, firebase,  true);
     thisPlayer = player;
     players.push(player);
+
+
+      //var line = new Line(game, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0)
+      //lines.push(line);
   }
 
   function update() {

@@ -1,4 +1,4 @@
-var Line = (function(Phaser) {
+define(['Phaser'], function(Phaser) {
   function Line(game, x, y) {
     this.type = "Line";
     this.x = x;

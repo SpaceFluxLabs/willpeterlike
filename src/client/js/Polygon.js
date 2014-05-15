@@ -24,5 +24,9 @@ define(function() {
     this.sides > 3 ? this.sides-= 1 : this.sides = 3;
   }
 
+  Polygon.prototype.numSides = function() {
+    return this.sides;
+  }
+
   return Polygon;
 });
