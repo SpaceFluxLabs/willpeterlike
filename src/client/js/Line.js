@@ -1,4 +1,5 @@
 define(['Phaser'], function(Phaser) {
+
   function Line(game, firebase, x, y) {
     this.type = "Line";
     this.firebase = firebase;

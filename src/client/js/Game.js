@@ -1,19 +1,23 @@
 define(['Phaser',
     'Firebase',
     'Player',
-    'Line'
+    'Line',
+    'Prediction'
     ],
     function(
       Phaser,
       Firebase,
       Player,
-      Line
+      Line,
+      Prediction  
     ) {
+
   var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim'),
       players = [],
       lines = [],
       CANVAS_WIDTH = 800,
       CANVAS_HEIGHT = 600,
+      latency = 100,
       game,
       thisPlayer
   ;
@@ -39,14 +43,13 @@ define(['Phaser',
           id = data.id,
           filter,
           line,
-          point,
-          player,
-          position,
-          velocity
+          velocity,
+          direction,
+          player
       ;
 
       if (type == "Player") {
-        point = new Phaser.Point(data.point.x, data.point.y);
+        direction = data.direction;
         filter = players.filter(function(item) {
           return item.id === id;
         });
@@ -57,9 +60,11 @@ define(['Phaser',
           player = new Player(id, game, firebase, false);
           players.push(player);
         }
+        
+        Prediction.adjust(latency + data.latency, player, data);
 
-        player.sprite.body.velocity = point;
         player.polygon.sides = data.sides;
+        player.polygon.direction = direction;
         player.draw();
       }
       else if (type == "Line") {
@@ -73,31 +78,41 @@ define(['Phaser',
     });
 
     // Create the current client's player object
-    thisPlayer = new Player(Date.now(), game, firebase,  true);
-    players.push(thisPlayer);
+    player = new Player(Date.now(), game, firebase,  true);
+    thisPlayer = player;
+    players.push(player);
+
+    //put our game's data under game.app
+    game.app = {};
+    game.app.lines = lines;
+    game.app.players = players;
   }
 
+  var counter = 0;
   function update() {
     var i,
-        line
+        line,
+        start,
+        end
     ;
 
     if ((Math.random() * 100 | 0) == 0) {
       line = new Line(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0);
       line._save();
     }
-
     for (i = 0; i < lines.length; i++) {
-      game.physics.arcade.collide(lines[i].sprite, thisPlayer.sprite, growHandler, null, this);
       lines[i].draw();
     }
 
-    thisPlayer.moveForward(thisPlayer.polygon, game.input.keyboard.isDown(Phaser.Keyboard.W));
-  }
+    thisPlayer.update(game);
 
-  function growHandler (obj1, obj2) {
-    obj1.destroy();
-    thisPlayer.grow();
-  }
+    // Calculate the latest latency from client to firebase 
+    // so we can include it with our packets and other clients use it for prediction
 
+    start = Date.now();
+    thisPlayer.save(latency, function() {
+      end = Date.now();
+      latency = (end - start) / 2;
+    });
+  }
 });

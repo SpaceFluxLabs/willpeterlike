@@ -2,25 +2,23 @@ define(['Phaser',
     'Polygon',
     'utils/ColorGenerator',
     'Line',
+    'PlayerInputComponent',
+    'PlayerPhysicsComponent',
     'PhaserExt'
     ],
     function(Phaser,
       Polygon,
       ColorGenerator,
-      Line
+      Line,
+      PlayerInputComponent,
+      PlayerPhysicsComponent,
+      PhaserExt
     ) {
+
   function Player(id, game, firebase,  shouldListen) {
 
-    var up,
-        down,
-        left,
-        right,
-        grow,
-        shrink,
-        turnLeft,
-        turnRight,
-        forward,
-        rotate = Math.PI/9
+    var grow,
+        shrink
     ;
 
     this.speed = 300;
@@ -37,36 +35,34 @@ define(['Phaser',
     this.sprite = game.add.sprite(100, 100, this.bitmap);
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 
+    this._inputComponent = new PlayerInputComponent();
+    this._physicsComponent = new PlayerPhysicsComponent();
+
+
     // Register keyboard events
 
     if (shouldListen) {
       grow = game.input.keyboard.addKey(Phaser.Keyboard.Q);
       shrink = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-      turnLeft = game.input.keyboard.addKey(Phaser.Keyboard.A);
-      turnRight = game.input.keyboard.addKey(Phaser.Keyboard.D);
 
       grow.onDown.add(this.grow.bind(this));
       shrink.onDown.add(this.shoot.bind(this));
       shrink.onDown.add(this.shrink.bind(this));
 
-      turnLeft.onDown.add(this.polygon.turn.bind(this.polygon, -rotate));
-      turnLeft.onDown.add(this.draw.bind(this, this.bitmap, game));
-      turnRight.onDown.add(this.polygon.turn.bind(this.polygon, rotate));
-      turnRight.onDown.add(this.draw.bind(this, this.bitmap, game));
     }
   }
 
-  Player.prototype.moveForward = function(p, keyPressed) {
-    if (keyPressed) {
-      this.velocity.x = this.speed * Math.cos(p.direction);
-      this.velocity.y = this.speed * Math.sin(p.direction);
-    } else {
-      this.velocity.x = 0;
-      this.velocity.y = 0;
-    }
+  /*
+   * Update player each frame
+   * @param {Phaser.Game} game - the game instance of this player
+   * @return {Player} - the Player instance
+   */
+  Player.prototype.update = function(game) {
+    this._inputComponent.update(game, this);
+    this._physicsComponent.update(game, this);
 
-    this._save();
-  };
+    return this;
+  }
 
   Player.prototype.shoot = function() {
     var linePosition,
@@ -90,27 +86,37 @@ define(['Phaser',
 
   /**
    * Save current Player state to firebase
-   * @api private
+   * @param {Number} Latency - latency between client & firebase in ms
+   * @param {Function} [callback] - the callback to execute after firebase is updated
    */
-  Player.prototype._save = function() {
+  Player.prototype.save = function(latency, callback) {
+
+    if (callback && typeof callback !== 'function') {
+      throw new TypeError('save callback must be a function');
+    }
+
     this.firebase.push({
       id: this.id,
+      latency: latency,
       type: this.type,
-      point: this.velocity,
+      velocity: this.velocity,
+      coordinates: {
+        x: this.sprite.x,
+        y: this.sprite.y
+      },
+      direction: this.polygon.direction,
       sides: this.polygon.sides
-    });
+    }, callback);
   }
 
   Player.prototype.grow = function() {
     this.polygon.addSide();
     this.draw();
-    this._save();
   }
 
   Player.prototype.shrink = function() {
     this.polygon.removeSide();
     this.draw();
-    this._save();
   }
 
   Player.prototype.draw = function() {

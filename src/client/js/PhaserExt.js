@@ -6,22 +6,22 @@
 define(['Phaser'], function(Phaser) {
   /** 
    * Draw a filled polygon to the BitmapData
-   * @param {Polygon} p - the polygon to draw
+   * @param {Polygon} poly - the polygon to draw
    * @param {string} [fillStype] - The context fillstyle
    */
-  Phaser.BitmapData.prototype.polygon = function(p, fillStyle) {
-    var direction = p.direction;
+  Phaser.BitmapData.prototype.polygon = function(poly, fillStyle) {
+    var direction = poly.direction;
 
     if (typeof fillStyle !== 'undefined') {
       this.context.fillStyle = fillStyle;
     }
 
     this.context.beginPath();
-    this.context.moveTo(p.x + p.radius * Math.cos(direction), p.y + p.radius * Math.sin(direction));
+    this.context.moveTo(poly.x + poly.radius * Math.cos(direction), poly.y + poly.radius * Math.sin(direction));
 
-    for (var i =1; i < p.sides + 1; i++) {
-      var theta = 2*Math.PI*i/p.sides + direction;
-      this.context.lineTo(p.x + p.radius * Math.cos(theta), p.y + p.radius * Math.sin(theta));
+    for (var i =1; i < poly.sides + 1; i++) {
+      var theta = 2*Math.PI*i/poly.sides + direction;
+      this.context.lineTo(poly.x + poly.radius * Math.cos(theta), poly.y + poly.radius * Math.sin(theta));
     }
 
     this.context.closePath();
