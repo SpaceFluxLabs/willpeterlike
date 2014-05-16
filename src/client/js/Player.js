@@ -65,12 +65,7 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     this.velocity.x += x;
     this.velocity.y += y;
 
-    this.firebase.push({
-      id: this.id,
-      type: this.type,
-      point: this.velocity
-    });
-
+    this._save();
   };
 
   Player.prototype.shoot = function() {
@@ -83,14 +78,32 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     }
   }
 
+  /*
+   * Save current Player state to firebase
+   * @api private
+   **/
+  Player.prototype._save = function() {
+    this.firebase.push({
+      id: this.id,
+      type: this.type,
+      point: this.velocity,
+      sides: this.polygon.sides
+    });
+  }
+
   Player.prototype.grow = function() {
     this.polygon.addSide();
-    this.bitmap.clear();
-    this.bitmap.polygon(this.polygon, '#FFFFFF');
+    this.draw();
+    this._save();
   }
-  
-  Player.prototype.draw = function(bitmap, game) {
 
+  Player.prototype.shrink = function() {
+    this.polygon.removeSide();
+    this.draw();
+    this._save();
+  }
+
+  Player.prototype.draw = function(bitmap, game) {
     bitmap.clear();
     bitmap.polygon(this.polygon, '#FFFFFF');
 
