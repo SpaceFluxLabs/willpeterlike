@@ -1,4 +1,4 @@
-define(['src/client/js/Polygon'], function(Polygon) {
+define(['Polygon'], function(Polygon) {
 
   describe('Polygon Class', function() {
 
