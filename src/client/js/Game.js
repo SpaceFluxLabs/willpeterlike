@@ -52,6 +52,8 @@ define(['Phaser',
         }
 
         player.sprite.body.velocity = point;
+        player.polygon.sides = data.sides;
+        player.draw();
       }
       else if (type == "Line") {
         var line;
