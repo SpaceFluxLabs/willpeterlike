@@ -7,7 +7,11 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       , right
       , grow
       , shrink
+      , turnLeft
+      , turnRight
+      , forward
       , speed = 100
+      , rotate = Math.PI/9;
     
     this.bitmap = game.add.bitmapData(100, 100)
     this.type = "Player";
@@ -23,12 +27,15 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     // Register keyboard events
 
     if(shouldListen) {
-      up = game.input.keyboard.addKey(Phaser.Keyboard.UP)
-      down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN)
-      left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT)
-      right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT)
-      grow = game.input.keyboard.addKey(Phaser.Keyboard.Q)
-      shrink = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR)
+      up = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+      down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+      left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+      right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+      grow = game.input.keyboard.addKey(Phaser.Keyboard.Q);
+      shrink = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+      turnLeft = game.input.keyboard.addKey(Phaser.Keyboard.A);
+      turnRight = game.input.keyboard.addKey(Phaser.Keyboard.D);
+      forward = game.input.keyboard.addKey(Phaser.Keyboard.W);
 
       up.onDown.add(this.setVelocity.bind(this, 0, -speed));
       up.onUp.add(this.setVelocity.bind(this, 0, speed));
@@ -40,12 +47,16 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       left.onDown.add(this.setVelocity.bind(this, -speed, 0));
       left.onUp.add(this.setVelocity.bind(this, speed, 0));
 
- 
       grow.onDown.add(this.polygon.addSide.bind(this.polygon));
       grow.onDown.add(this.draw.bind(this, this.bitmap, game));
       shrink.onDown.add(this.shoot.bind(this));
       shrink.onDown.add(this.polygon.removeSide.bind(this.polygon));
       shrink.onDown.add(this.draw.bind(this, this.bitmap, game));
+     
+      turnLeft.onDown.add(this.polygon.turn.bind(this.polygon, rotate, true));
+      turnLeft.onDown.add(this.draw.bind(this, this.bitmap, game));
+      turnRight.onDown.add(this.polygon.turn.bind(this.polygon, rotate, false));
+      turnRight.onDown.add(this.draw.bind(this, this.bitmap, game));
     }
   }
 
