@@ -47,11 +47,9 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       left.onDown.add(this.setVelocity.bind(this, -speed, 0));
       left.onUp.add(this.setVelocity.bind(this, speed, 0));
 
-      grow.onDown.add(this.polygon.addSide.bind(this.polygon));
-      grow.onDown.add(this.draw.bind(this, this.bitmap, game));
+      grow.onDown.add(this.grow.bind(this));
       shrink.onDown.add(this.shoot.bind(this));
-      shrink.onDown.add(this.polygon.removeSide.bind(this.polygon));
-      shrink.onDown.add(this.draw.bind(this, this.bitmap, game));
+      shrink.onDown.add(this.shrink.bind(this));
      
       turnLeft.onDown.add(this.polygon.turn.bind(this.polygon, rotate, true));
       turnLeft.onDown.add(this.draw.bind(this, this.bitmap, game));
@@ -103,9 +101,9 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     this._save();
   }
 
-  Player.prototype.draw = function(bitmap, game) {
-    bitmap.clear();
-    bitmap.polygon(this.polygon, '#FFFFFF');
+  Player.prototype.draw = function() {
+    this.bitmap.clear();
+    this.bitmap.polygon(this.polygon, '#FFFFFF');
 
   }
 
