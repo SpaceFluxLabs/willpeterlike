@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "karma": "^0.12.16"
+  },
+  "scripts": {
+    "test": "test/run-test.sh"
   }
 }
