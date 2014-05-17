@@ -1,20 +1,20 @@
-define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) {
+define(['Phaser', 'PhaserExt', 'Polygon', 'Line'], function(Phaser, PhaserExt, Polygon, Line) {
   function Player(id, game, firebase,  shouldListen) {
 
-    var up,
-        down,
-        left,
-        right,
-        grow,
-        shrink,
-        turnLeft,
-        turnRight,
-        forward,
-        speed = 100,
-        rotate = Math.PI/9
-    ;
-
-    this.bitmap = game.add.bitmapData(100, 100)
+    var up
+      , down
+      , left
+      , right
+      , grow
+      , shrink
+      , turnLeft
+      , turnRight
+      , forward
+      , speed = 100
+      , rotate = Math.PI/9;
+    
+    this.game = game;
+    this.bitmap = game.add.bitmapData(100, 100);
     this.type = "Player";
     this.id = id;
     this.firebase = firebase;
@@ -60,11 +60,25 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     var linePos;
 
     if (this.polygon.numSides() > 3) {
+<<<<<<< HEAD
       linePos = new Phaser.Point(this.sprite.body.x + 150, this.sprite.body.y);
       this.firebase.push({
         type: "Line",
         point: linePos
       })
+=======
+      var linePosition = new Phaser.Point(
+        this.sprite.body.center.x + this.polygon.radius * Math.cos(this.polygon.direction) * 2, 
+        this.sprite.body.center.y + this.polygon.radius * Math.sin(this.polygon.direction) * 2
+        );
+      var lineVelocity = new Phaser.Point(
+        Math.cos(this.polygon.direction) * 100,
+        Math.sin(this.polygon.direction) * 100
+        );
+      var line = new Line(this.game, this.firebase, linePosition.x, linePosition.y);
+      line.setVelocity(lineVelocity.x, lineVelocity.y);
+      line._save();
+>>>>>>> Working version of producing a line in front of object and synchronizing lines between different clients
     }
   }
 

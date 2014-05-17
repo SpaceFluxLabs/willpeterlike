@@ -62,12 +62,11 @@ define(['Phaser',
         player.draw();
       }
       else if (type == "Line") {
-        point = new Phaser.Point(data.point.x, data.point.y);
-        console.log(point);
-        line = new Line(game, point.x, point.y);
+        var line;
+        var point = new Phaser.Point(data.position.x, data.position.y);
+        line = new Line(game, firebase, point.x, point.y);
         lines.push(line);
       }
-
     });
 
     player = new Player(Date.now(), game, firebase,  true);
@@ -81,13 +80,14 @@ define(['Phaser',
     ;
 
     if ((Math.random() * 100 | 0) == 0) {
-      line = new Line(game, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0)
-      lines.push(line);
+      line = new Line(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0);
+      line._save();
     }
 
     for (i = 0; i < lines.length; i++) {
       game.physics.arcade.collide(lines[i].sprite, thisPlayer.sprite, growHandler, null, this);
       lines[i].sprite.rotation += 0.02;
+      lines[i].draw();
     }
 
     thisPlayer.moveForward(thisPlayer.polygon, game.input.keyboard.isDown(Phaser.Keyboard.W));
