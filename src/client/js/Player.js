@@ -27,26 +27,12 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     // Register keyboard events
 
     if(shouldListen) {
-      up = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-      down = game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-      left = game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-      right = game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
       grow = game.input.keyboard.addKey(Phaser.Keyboard.Q);
       shrink = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
       turnLeft = game.input.keyboard.addKey(Phaser.Keyboard.A);
       turnRight = game.input.keyboard.addKey(Phaser.Keyboard.D);
       forward = game.input.keyboard.addKey(Phaser.Keyboard.W);
-
-      up.onDown.add(this.setVelocity.bind(this, 0, -speed));
-      up.onUp.add(this.setVelocity.bind(this, 0, speed));
-      down.onDown.add(this.setVelocity.bind(this, 0, speed));
-      down.onUp.add(this.setVelocity.bind(this, 0, -speed));
-
-      right.onDown.add(this.setVelocity.bind(this, speed, 0));
-      right.onUp.add(this.setVelocity.bind(this, -speed, 0));
-      left.onDown.add(this.setVelocity.bind(this, -speed, 0));
-      left.onUp.add(this.setVelocity.bind(this, speed, 0));
-
+      
       grow.onDown.add(this.grow.bind(this));
       shrink.onDown.add(this.shoot.bind(this));
       shrink.onDown.add(this.shrink.bind(this));
@@ -55,13 +41,20 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       turnLeft.onDown.add(this.draw.bind(this, this.bitmap, game));
       turnRight.onDown.add(this.polygon.turn.bind(this.polygon, rotate, false));
       turnRight.onDown.add(this.draw.bind(this, this.bitmap, game));
+      
+      forward.onDown.add(this.moveForward.bind(this, this.polygon, true));
+      forward.onUp.add(this.moveForward.bind(this, this.polygon, false));
     }
   }
 
-  Player.prototype.setVelocity = function(x, y) {
-
-    this.velocity.x += x;
-    this.velocity.y += y;
+  Player.prototype.moveForward = function(p, keyPressed) {
+    if (keyPressed) {
+      this.velocity.x += 100 * Math.cos(p.direction);
+      this.velocity.y += 100 * Math.sin(p.direction);
+    } else {
+      this.velocity.x -= 100 * Math.cos(p.direction);
+      this.velocity.y -= 100 * Math.sin(p.direction);
+    }
 
     this._save();
   };

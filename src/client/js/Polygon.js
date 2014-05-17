@@ -35,7 +35,6 @@ define(function() {
     } else {
       this.direction += theta;
     }
-    console.log(this.direction);
   }
 
   return Polygon;
