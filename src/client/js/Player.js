@@ -94,10 +94,6 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
     this._save();
   }
 
-  Player.prototype.turn = function (polygon) {
-    polygon.turn
-  }
-
   Player.prototype.draw = function() {
     this.bitmap.clear();
     this.bitmap.polygon(this.polygon, '#FFFFFF');
