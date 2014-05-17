@@ -89,7 +89,6 @@ define(['Phaser',
 
     for (i = 0; i < lines.length; i++) {
       game.physics.arcade.collide(lines[i].sprite, thisPlayer.sprite, growHandler, null, this);
-      lines[i].sprite.rotation += 0.02;
       lines[i].draw();
     }
 

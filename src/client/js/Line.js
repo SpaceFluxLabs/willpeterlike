@@ -4,7 +4,8 @@ define(['Phaser'], function(Phaser) {
     this.firebase = firebase;
     this.position = new Phaser.Point(x,y);
     this.velocity = new Phaser.Point(0,0);
-    this.bitmap = game.add.bitmapData(1,50);
+    this.lineLength = 50;
+    this.bitmap = game.add.bitmapData(this.lineLength,this.lineLength);
 
     this.sprite = game.add.sprite(x, y, this.bitmap);
     this.sprite.anchor.setTo(0.5,0.5);
@@ -24,6 +25,17 @@ define(['Phaser'], function(Phaser) {
   Line.prototype.setVelocity = function(x, y) {
     this.velocity.x = x;
     this.velocity.y = y;
+  }
+
+  Line.prototype.getUnitVelocity = function() {
+    var absVelocity = Math.sqrt(Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y,2));
+    if (absVelocity === 0) {
+      absVelocity = 1;
+    }
+    return {
+      x : this.velocity.x / absVelocity,
+      y : this.velocity.y / absVelocity
+    }
   }
 
   Line.prototype.draw = function() {
