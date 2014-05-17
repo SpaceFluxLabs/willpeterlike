@@ -4,7 +4,7 @@ define(['Player'], function(Player) {
     var MockGame = { 
 
         add: {
-          bitmapData: jasmine.createSpy().andReturn(
+          bitmapData: jasmine.createSpy().and.returnValue(
             {
               polygon: jasmine.createSpy()
             }
@@ -18,7 +18,7 @@ define(['Player'], function(Player) {
 
         input: { 
           keyboard: {
-            addKey: jasmine.createSpy().andReturn(
+            addKey: jasmine.createSpy().and.returnValue(
               {
                 onDown: {
                   add: jasmine.createSpy()
