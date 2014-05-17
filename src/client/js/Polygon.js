@@ -29,12 +29,8 @@ define(function() {
     return this.sides;
   }
 
-  Polygon.prototype.turn = function (theta, turnLeft) {
-    if (turnLeft) {
-      this.direction -= theta;
-    } else {
-      this.direction += theta;
-    }
+  Polygon.prototype.turn = function (theta) {
+    this.direction += theta;
   }
 
   return Polygon;

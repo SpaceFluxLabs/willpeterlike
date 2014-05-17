@@ -27,7 +27,7 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
 
     // Register keyboard events
 
-    if(shouldListen) {
+    if (shouldListen) {
       grow = game.input.keyboard.addKey(Phaser.Keyboard.Q);
       shrink = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
       turnLeft = game.input.keyboard.addKey(Phaser.Keyboard.A);
@@ -37,11 +37,10 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       shrink.onDown.add(this.shoot.bind(this));
       shrink.onDown.add(this.shrink.bind(this));
 
-      turnLeft.onDown.add(this.polygon.turn.bind(this.polygon, rotate, true));
+      turnLeft.onDown.add(this.polygon.turn.bind(this.polygon, -rotate));
       turnLeft.onDown.add(this.draw.bind(this, this.bitmap, game));
-      turnRight.onDown.add(this.polygon.turn.bind(this.polygon, rotate, false));
+      turnRight.onDown.add(this.polygon.turn.bind(this.polygon, rotate));
       turnRight.onDown.add(this.draw.bind(this, this.bitmap, game));
-
     }
   }
 

@@ -42,13 +42,13 @@ define(['Polygon'], function(Polygon) {
 
     it('should turn left', function() {
       expect(poly.direction).toBe(0);
-      poly.turn(100, true);
+      poly.turn(-100);
       expect(poly.direction).toBe(-100);
     });
 
     it('should turn right', function() {
       expect(poly.direction).toBe(0);
-      poly.turn(100, false);
+      poly.turn(100);
       expect(poly.direction).toBe(100);
     });
 
