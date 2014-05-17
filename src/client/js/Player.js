@@ -31,7 +31,6 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       shrink = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
       turnLeft = game.input.keyboard.addKey(Phaser.Keyboard.A);
       turnRight = game.input.keyboard.addKey(Phaser.Keyboard.D);
-      forward = game.input.keyboard.addKey(Phaser.Keyboard.W);
       
       grow.onDown.add(this.grow.bind(this));
       shrink.onDown.add(this.shoot.bind(this));
@@ -41,19 +40,17 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
       turnLeft.onDown.add(this.draw.bind(this, this.bitmap, game));
       turnRight.onDown.add(this.polygon.turn.bind(this.polygon, rotate, false));
       turnRight.onDown.add(this.draw.bind(this, this.bitmap, game));
-      
-      forward.onDown.add(this.moveForward.bind(this, this.polygon, true));
-      forward.onUp.add(this.moveForward.bind(this, this.polygon, false));
+
     }
   }
 
   Player.prototype.moveForward = function(p, keyPressed) {
     if (keyPressed) {
-      this.velocity.x += 100 * Math.cos(p.direction);
-      this.velocity.y += 100 * Math.sin(p.direction);
+      this.velocity.x = 100 * Math.cos(p.direction);
+      this.velocity.y = 100 * Math.sin(p.direction);
     } else {
-      this.velocity.x -= 100 * Math.cos(p.direction);
-      this.velocity.y -= 100 * Math.sin(p.direction);
+      this.velocity.x = 0;
+      this.velocity.y = 0;
     }
 
     this._save();
