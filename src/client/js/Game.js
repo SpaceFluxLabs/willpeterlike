@@ -63,8 +63,11 @@ define(['Phaser',
       }
       else if (type == "Line") {
         var line;
-        var point = new Phaser.Point(data.position.x, data.position.y);
-        line = new Line(game, firebase, point.x, point.y);
+        var position = new Phaser.Point(data.position.x, data.position.y);
+        var velocity = new Phaser.Point(data.velocity.x, data.velocity.y);
+        line = new Line(game, firebase, position.x, position.y);
+        line.setVelocity(data.velocity.x, data.velocity.y);
+        line.sprite.body.velocity = velocity;
         lines.push(line);
       }
     });
