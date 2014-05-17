@@ -88,6 +88,8 @@ define(['Phaser',
       game.physics.arcade.collide(lines[i].sprite, thisPlayer.sprite, growHandler, null, this);
       lines[i].sprite.rotation += 0.02;
     }
+    
+    players[0].moveForward(players[0].polygon, game.input.keyboard.isDown(Phaser.Keyboard.W));
   }
 
   function growHandler (obj1, obj2) {
