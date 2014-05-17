@@ -73,9 +73,9 @@ define(['Phaser',
       }
     });
 
-    player = new Player(Date.now(), game, firebase,  true);
-    thisPlayer = player;
-    players.push(player);
+    // Create the current client's player object
+    thisPlayer = new Player(Date.now(), game, firebase,  true);
+    players.push(thisPlayer);
   }
 
   function update() {
