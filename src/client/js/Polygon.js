@@ -28,7 +28,7 @@ define(function() {
   Polygon.prototype.numSides = function () {
     return this.sides;
   }
-  
+
   Polygon.prototype.turn = function (theta, turnLeft) {
     if (turnLeft) {
       this.direction -= theta;

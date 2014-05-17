@@ -8,7 +8,8 @@ define(['Phaser',
       Phaser,
       Firebase,
       Player,
-      Line) {
+      Line
+    ) {
   var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim'),
       players = [],
       lines = [],
@@ -20,7 +21,7 @@ define(['Phaser',
 
   firebase.remove(function() {
     var divID = 'phaser';
-    game = new Phaser.Game(CANVAS_WIDTH,CANVAS_HEIGHT,Phaser.CANVAS, divID, {preload: preload, create: create, update: update});  
+    game = new Phaser.Game(CANVAS_WIDTH,CANVAS_HEIGHT,Phaser.CANVAS, divID, {preload: preload, create: create, update: update});
   });
 
   function preload() {
@@ -34,15 +35,20 @@ define(['Phaser',
   function create() {
 
     firebase.on('child_added', function(snapshot) {
-      var data = snapshot.val();
-      var type = data.type;
+      var data = snapshot.val(),
+          type = data.type,
+          id = data.id,
+          filter,
+          line,
+          point,
+          player
+      ;
+
       if (type == "Player") {
-        var id = data.id;
-        var point = new Phaser.Point(data.point.x, data.point.y);
-        var filter = players.filter(function(item) {
+        point = new Phaser.Point(data.point.x, data.point.y);
+        filter = players.filter(function(item) {
           return item.id === id;
         });
-        var player;
 
         if(filter.length) {
           player = filter[0];
@@ -56,8 +62,7 @@ define(['Phaser',
         player.draw();
       }
       else if (type == "Line") {
-        var line;
-        var point = new Phaser.Point(data.point.x, data.point.y);
+        point = new Phaser.Point(data.point.x, data.point.y);
         console.log(point);
         line = new Line(game, point.x, point.y);
         lines.push(line);
@@ -65,13 +70,9 @@ define(['Phaser',
 
     });
 
-    var player = new Player(Date.now(), game, firebase,  true);
+    player = new Player(Date.now(), game, firebase,  true);
     thisPlayer = player;
     players.push(player);
-
-
-      //var line = new Line(game, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0)
-      //lines.push(line);
   }
 
   function update() {
@@ -88,7 +89,7 @@ define(['Phaser',
       game.physics.arcade.collide(lines[i].sprite, thisPlayer.sprite, growHandler, null, this);
       lines[i].sprite.rotation += 0.02;
     }
-    
+
     thisPlayer.moveForward(thisPlayer.polygon, game.input.keyboard.isDown(Phaser.Keyboard.W));
   }
 

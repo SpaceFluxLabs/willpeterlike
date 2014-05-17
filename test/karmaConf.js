@@ -17,20 +17,20 @@ module.exports = function(config) {
     files: [
       'test/test-main.js',
       {pattern: 'src/client/js/*.js', included: false},
-      {pattern: 'test/*Spec.js', included: false}
+      {pattern: 'test/client/js/*Spec.js', included: false}
     ],
 
 
     // list of files to exclude
     exclude: [
-      
+
     ],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-    
+
     },
 
 
