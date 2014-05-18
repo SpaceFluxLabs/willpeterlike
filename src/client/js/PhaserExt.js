@@ -29,18 +29,22 @@ define(['Phaser'], function(Phaser) {
 
   };
 
-  Phaser.BitmapData.prototype.line = function(l, fillStyle) {
-    if (typeof fillStyle !== 'undefined') {
-      this.context.fillStyle = fillStyle;
+  Phaser.BitmapData.prototype.line = function(line, strokeStyle) {
+    if (typeof strokeStyle !== 'undefined') {
+      this.context.strokeStyle = strokeStyle;
     }
-    var length = 50;
+
+    var unitVelocity = line.getUnitVelocity();
+    var halfLength = line.lineLength / 2;
     this.context.beginPath();
-    this.context.moveTo(0, 0);
-    this.context.lineTo(0, length);
-    this.context.lineTo(1, length);
-    this.context.lineTo(1, 0);
-    this.context.closePath();
-    this.context.fill();
+    if (unitVelocity.x === 0 && unitVelocity.y === 0) {
+      unitVelocity.x = 1;
+      unitVelocity.y = 1;
+    }
+    this.context.moveTo(halfLength * (unitVelocity.x + 1), halfLength * (unitVelocity.y + 1));
+    this.context.lineTo(halfLength * (-unitVelocity.x + 1), halfLength * (-unitVelocity.y + 1));
+    this.context.lineWidth = 1;
+    this.context.stroke();
   };
 
 });

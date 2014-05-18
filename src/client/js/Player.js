@@ -1,20 +1,20 @@
-define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) {
+define(['Phaser', 'PhaserExt', 'Polygon', 'Line'], function(Phaser, PhaserExt, Polygon, Line) {
   function Player(id, game, firebase,  shouldListen) {
 
-    var up,
-        down,
-        left,
-        right,
-        grow,
-        shrink,
-        turnLeft,
-        turnRight,
-        forward,
-        speed = 100,
-        rotate = Math.PI/9
-    ;
-
-    this.bitmap = game.add.bitmapData(100, 100)
+    var up
+      , down
+      , left
+      , right
+      , grow
+      , shrink
+      , turnLeft
+      , turnRight
+      , forward
+      , rotate = Math.PI/9;
+    
+    this.speed = 200;
+    this.game = game;
+    this.bitmap = game.add.bitmapData(100, 100);
     this.type = "Player";
     this.id = id;
     this.firebase = firebase;
@@ -46,8 +46,8 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
 
   Player.prototype.moveForward = function(p, keyPressed) {
     if (keyPressed) {
-      this.velocity.x = 100 * Math.cos(p.direction);
-      this.velocity.y = 100 * Math.sin(p.direction);
+      this.velocity.x = this.speed * Math.cos(p.direction);
+      this.velocity.y = this.speed * Math.sin(p.direction);
     } else {
       this.velocity.x = 0;
       this.velocity.y = 0;
@@ -57,14 +57,22 @@ define(['Phaser', 'PhaserExt', 'Polygon'], function(Phaser, PhaserExt, Polygon) 
   };
 
   Player.prototype.shoot = function() {
-    var linePos;
+    var linePosition,
+        lineVelocity,
+        line;
 
     if (this.polygon.numSides() > 3) {
-      linePos = new Phaser.Point(this.sprite.body.x + 150, this.sprite.body.y);
-      this.firebase.push({
-        type: "Line",
-        point: linePos
-      })
+      linePosition = new Phaser.Point(
+        this.sprite.body.center.x + this.polygon.radius * Math.cos(this.polygon.direction) * 2, 
+        this.sprite.body.center.y + this.polygon.radius * Math.sin(this.polygon.direction) * 2
+      );
+      lineVelocity = new Phaser.Point(
+        Math.cos(this.polygon.direction) * this.speed * 2,
+        Math.sin(this.polygon.direction) * this.speed * 2
+      );
+      line = new Line(this.game, this.firebase, linePosition.x, linePosition.y);
+      line.setVelocity(lineVelocity.x, lineVelocity.y);
+      line._save();
     }
   }
 
