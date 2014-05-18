@@ -1,17 +1,25 @@
-define(['Phaser', 'PhaserExt', 'Polygon', 'Line'], function(Phaser, PhaserExt, Polygon, Line) {
+define(['Phaser',
+    'Polygon',
+    'utils/ColorGenerator'
+    ],
+    function(Phaser,
+      Polygon,
+      ColorGenerator
+    ) {
   function Player(id, game, firebase,  shouldListen) {
 
-    var up
-      , down
-      , left
-      , right
-      , grow
-      , shrink
-      , turnLeft
-      , turnRight
-      , forward
-      , rotate = Math.PI/9;
-    
+    var up,
+        down,
+        left,
+        right,
+        grow,
+        shrink,
+        turnLeft,
+        turnRight,
+        forward,
+        rotate = Math.PI/9
+    ;
+
     this.speed = 200;
     this.game = game;
     this.bitmap = game.add.bitmapData(100, 100);
@@ -19,9 +27,10 @@ define(['Phaser', 'PhaserExt', 'Polygon', 'Line'], function(Phaser, PhaserExt, P
     this.id = id;
     this.firebase = firebase;
     this.velocity = new Phaser.Point();
-    this.polygon = new Polygon(50,50,4,50, '#FFFFFF');
+    this.polygon = new Polygon(50,50,4,50);
+    this.color = ColorGenerator.getColorFromNumber(this.id);
 
-    this.bitmap.polygon(this.polygon, '#FFFFFF');
+    this.bitmap.polygon(this.polygon, this.color);
     this.sprite = game.add.sprite(100, 100, this.bitmap);
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
 
@@ -46,8 +55,8 @@ define(['Phaser', 'PhaserExt', 'Polygon', 'Line'], function(Phaser, PhaserExt, P
 
   Player.prototype.moveForward = function(p, keyPressed) {
     if (keyPressed) {
-      this.velocity.x = this.speed * Math.cos(p.direction);
-      this.velocity.y = this.speed * Math.sin(p.direction);
+      this.velocity.x = 100 * Math.cos(p.direction);
+      this.velocity.y = 100 * Math.sin(p.direction);
     } else {
       this.velocity.x = 0;
       this.velocity.y = 0;
@@ -57,29 +66,21 @@ define(['Phaser', 'PhaserExt', 'Polygon', 'Line'], function(Phaser, PhaserExt, P
   };
 
   Player.prototype.shoot = function() {
-    var linePosition,
-        lineVelocity,
-        line;
+    var linePos;
 
     if (this.polygon.numSides() > 3) {
-      linePosition = new Phaser.Point(
-        this.sprite.body.center.x + this.polygon.radius * Math.cos(this.polygon.direction) * 2, 
-        this.sprite.body.center.y + this.polygon.radius * Math.sin(this.polygon.direction) * 2
-      );
-      lineVelocity = new Phaser.Point(
-        Math.cos(this.polygon.direction) * this.speed * 2,
-        Math.sin(this.polygon.direction) * this.speed * 2
-      );
-      line = new Line(this.game, this.firebase, linePosition.x, linePosition.y);
-      line.setVelocity(lineVelocity.x, lineVelocity.y);
-      line._save();
+      linePos = new Phaser.Point(this.sprite.body.x + 150, this.sprite.body.y);
+      this.firebase.push({
+        type: "Line",
+        point: linePos
+      })
     }
   }
 
-  /*
+  /**
    * Save current Player state to firebase
    * @api private
-   **/
+   */
   Player.prototype._save = function() {
     this.firebase.push({
       id: this.id,
@@ -103,7 +104,7 @@ define(['Phaser', 'PhaserExt', 'Polygon', 'Line'], function(Phaser, PhaserExt, P
 
   Player.prototype.draw = function() {
     this.bitmap.clear();
-    this.bitmap.polygon(this.polygon, '#FFFFFF');
+    this.bitmap.polygon(this.polygon, this.color);
   }
 
   return Player;

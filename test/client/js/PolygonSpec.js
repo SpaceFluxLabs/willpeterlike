@@ -28,7 +28,7 @@ define(['Polygon'], function(Polygon) {
     });
 
     it('should never fall below having 3 sides', function() {
-      for (var i=0; i < 5; i++) {
+      for (var i=0; i < sides; i++) {
         poly.removeSide();
       }
       expect(poly.numSides()).toBe(3);
