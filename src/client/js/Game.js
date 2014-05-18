@@ -41,7 +41,9 @@ define(['Phaser',
           filter,
           line,
           point,
-          player
+          player,
+          position,
+          velocity
       ;
 
       if (type == "Player") {
@@ -62,9 +64,8 @@ define(['Phaser',
         player.draw();
       }
       else if (type == "Line") {
-        var line;
-        var position = new Phaser.Point(data.position.x, data.position.y);
-        var velocity = new Phaser.Point(data.velocity.x, data.velocity.y);
+        position = new Phaser.Point(data.position.x, data.position.y);
+        velocity = new Phaser.Point(data.velocity.x, data.velocity.y);
         line = new Line(game, firebase, position.x, position.y);
         line.setVelocity(data.velocity.x, data.velocity.y);
         line.sprite.body.velocity = velocity;

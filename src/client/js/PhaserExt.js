@@ -29,13 +29,13 @@ define(['Phaser'], function(Phaser) {
 
   };
 
-  Phaser.BitmapData.prototype.line = function(l, strokeStyle) {
+  Phaser.BitmapData.prototype.line = function(line, strokeStyle) {
     if (typeof strokeStyle !== 'undefined') {
       this.context.strokeStyle = strokeStyle;
     }
 
-    var unitVelocity = l.getUnitVelocity();
-    var halfLength = l.lineLength / 2;
+    var unitVelocity = line.getUnitVelocity();
+    var halfLength = line.lineLength / 2;
     this.context.beginPath();
     if (unitVelocity.x === 0 && unitVelocity.y === 0) {
       unitVelocity.x = 1;

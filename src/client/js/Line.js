@@ -30,11 +30,15 @@ define(['Phaser'], function(Phaser) {
   Line.prototype.getUnitVelocity = function() {
     var absVelocity = Math.sqrt(Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y,2));
     if (absVelocity === 0) {
-      absVelocity = 1;
-    }
-    return {
-      x : this.velocity.x / absVelocity,
-      y : this.velocity.y / absVelocity
+      return {
+        x : 0,
+        y : 0
+      }
+    } else {
+      return {
+        x : this.velocity.x / absVelocity,
+        y : this.velocity.y / absVelocity
+      }
     }
   }
 
