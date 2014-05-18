@@ -10,6 +10,6 @@
     "requirejs": "^2.1.11"
   },
   "scripts": {
-    "test": "test/run-test.sh"
+    "test": "make test"
   }
 }
