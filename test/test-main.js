@@ -30,6 +30,9 @@ require.config({
     ],
     'Lodash': [
       'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min'
+    ],
+    'Mock': [
+      '/base/test/client/mock'
     ]
   },
   shim: {
