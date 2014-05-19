@@ -1,8 +1,7 @@
 define(['Phaser',
     'Firebase',
     'Player',
-    'Line',
-    'PhaserExt'
+    'Line'
     ],
     function(
       Phaser,

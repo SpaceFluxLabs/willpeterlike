@@ -1,7 +1,8 @@
 define(['Phaser',
     'Polygon',
     'utils/ColorGenerator',
-    'Line'
+    'Line',
+    'PhaserExt'
     ],
     function(Phaser,
       Polygon,
