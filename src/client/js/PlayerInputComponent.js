@@ -40,8 +40,8 @@ define(['Lodash' ], function( _ ) {
     ;
 
     if (keyboard.isDown(keys.W)) {
-      player.velocity.x = 100 * Math.cos(player.polygon.direction);
-      player.velocity.y = 100 * Math.sin(player.polygon.direction);
+      player.velocity.x = this.calcXVelocity(player);
+      player.velocity.y = this.calcYVelocity(player);
     } else {
       player.velocity.x = 0;
       player.velocity.y = 0;
