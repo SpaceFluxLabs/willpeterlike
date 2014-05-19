@@ -16,7 +16,12 @@ define(function() {
     },
 
     physics: {
-      enable: jasmine.createSpy()
+      enable: jasmine.createSpy(),
+      arcade: jasmine.createSpy().and.returnValue(
+        {
+          collide: jasmine.createSpy()
+        }
+      )
     },
     app: {
       lines: []
