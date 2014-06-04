@@ -2,7 +2,9 @@ define(['Lodash' ], function( _ ) {
 
   var prototype = PlayerInputComponent.prototype,
       BASE_VELOCITY = PlayerInputComponent.BASE_VELOCITY = 100,
-      ROTATION = PlayerInputComponent.ROTATION = Math.PI / 36
+      FRICTION = PlayerInputComponent.FRICTION = 0.90,
+      ROTATION = PlayerInputComponent.ROTATION = Math.PI / 36,
+      TOP_SPEED = PlayerInputComponent.TOP_SPEED = 400
   ;
 
   /**
@@ -34,19 +36,26 @@ define(['Lodash' ], function( _ ) {
    * @param {Player} game - the player to update
    */
   prototype.update = function(game, player) {
-
+    
     var keyboard = game.input.keyboard,
         keys = Phaser.Keyboard
     ;
-
+    var speed = player.polygon.speed,
+        acceleration = player.polygon.acceleration,
+        direction = player.polygon.direction
+    ;
+            
     if (keyboard.isDown(keys.W)) {
-      player.velocity.x = this.calcXVelocity(player);
-      player.velocity.y = this.calcYVelocity(player);
+      //check if speed passes cap
+      speed < TOP_SPEED ? player.polygon.setSpeed(speed + acceleration) : player.polygon.setSpeed(TOP_SPEED);    
+      player.velocity.x = FRICTION * speed * Math.cos(direction);
+      player.velocity.y = FRICTION * speed * Math.sin(direction);       
     } else {
-      player.velocity.x = 0;
-      player.velocity.y = 0;
+      //slow velocity by coefficient of friction
+      player.velocity.x *= FRICTION;
+      player.velocity.y *= FRICTION;
+      player.polygon.setSpeed(BASE_VELOCITY);
     }
-
 
     if (keyboard.isDown(keys.A)) {
       player.polygon.turn(-ROTATION);
