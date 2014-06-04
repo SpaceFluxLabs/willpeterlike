@@ -11,6 +11,7 @@ define(['Phaser',
       Line,
       Prediction  
     ) {
+  'use strict';
 
   var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim'),
       players = [],
@@ -36,6 +37,7 @@ define(['Phaser',
   }
 
   function create() {
+    var player;
 
     firebase.on('child_added', function(snapshot) {
       var data = snapshot.val(),
@@ -45,7 +47,7 @@ define(['Phaser',
           line,
           velocity,
           direction,
-          player
+          position
       ;
 
       if (type == "Player") {

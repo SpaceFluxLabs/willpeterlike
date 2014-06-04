@@ -1,4 +1,5 @@
 define(['Lodash' ], function( _ ) {
+  'use strict';
 
   var prototype = PlayerInputComponent.prototype,
       BASE_VELOCITY = PlayerInputComponent.BASE_VELOCITY = 100,

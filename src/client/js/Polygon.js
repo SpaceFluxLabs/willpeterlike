@@ -1,4 +1,6 @@
 define(function() {
+  'use strict';
+
   function Polygon(x, y, sides, radius) {
     this.x = x;
     this.y = y;

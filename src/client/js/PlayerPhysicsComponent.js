@@ -1,4 +1,5 @@
 define(['Lodash' ], function( _) {
+  'use strict';
   
   var prototype = PlayerPhysicsComponent.prototype
   ;
