@@ -14,7 +14,8 @@ define(function() {
         }
       ),
     },
-
+    width: jasmine.createSpy().and.returnValue(500),
+    height: jasmine.createSpy().and.returnValue(500),
     physics: {
       enable: jasmine.createSpy(),
       arcade: jasmine.createSpy().and.returnValue(

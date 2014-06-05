@@ -24,7 +24,7 @@ define(['PlayerPhysicsComponent',
       player = jasmine.createSpy();
       player.grow = jasmine.createSpy();
       player.sprite = jasmine.createSpy();
-      //game = jasmine.createSpy();
+      player.velocity = jasmine.createSpy();
 
       game = _.clone(MockGame, true);
     });
@@ -82,6 +82,34 @@ define(['PlayerPhysicsComponent',
               line.sprite, player.sprite);
          });
       });
-    })
+
+      it('should stop velocity if polygon is at TL border', function() {
+
+        player.sprite.x = 0;
+        player.sprite.y = 0;
+        player.velocity.x = -100;
+        player.velocity.y = -100;
+
+        component.update(game, player);
+
+        expect(player.velocity.x).toEqual(0);
+        expect(player.velocity.y).toEqual(0);
+
+      });
+
+      it('should stop velocity if poly at BR border', function() {
+
+        player.sprite.x = game.width;
+        player.sprite.y = game.height;
+        player.velocity.x = 100;
+        player.velocity.y = 100;
+
+        component.update(game, player);
+
+        expect(player.velocity.x).toEqual(0);
+        expect(player.velocity.y).toEqual(0);
+
+      });
+    });
   });
 });
