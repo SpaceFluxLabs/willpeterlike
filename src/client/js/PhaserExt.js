@@ -4,6 +4,8 @@
  */
 
 define(['Phaser'], function(Phaser) {
+  'use strict';
+
   /** 
    * Draw a filled polygon to the BitmapData
    * @param {Polygon} poly - the polygon to draw

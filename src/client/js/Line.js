@@ -1,4 +1,5 @@
 define(['Phaser'], function(Phaser) {
+  'use strict';
 
   function Line(game, firebase, x, y) {
     this.type = "Line";

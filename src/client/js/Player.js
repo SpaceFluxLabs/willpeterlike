@@ -14,6 +14,7 @@ define(['Phaser',
       PlayerPhysicsComponent,
       PhaserExt
     ) {
+  'use strict';
 
   function Player(id, game, firebase,  shouldListen) {
 
