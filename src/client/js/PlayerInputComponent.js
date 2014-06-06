@@ -15,6 +15,22 @@ define(['Lodash' ], function( _ ) {
   }
 
   /**
+   * Calculate the X velocity of a player according to its direction
+   * @param {Player} player - the player to check
+   */
+  prototype.calcXVelocity = function(player) {
+    return BASE_VELOCITY * Math.cos(player.polygon.direction);
+  }
+
+  /**
+   * Calculate the Y velocity of a player according to its direction
+   * @param {Player} player - the Player to check
+   */
+  prototype.calcYVelocity = function(player) {
+    return BASE_VELOCITY * Math.sin(player.polygon.direction);
+  }
+
+  /**
    * Update the player according to keyboard input
    * @param {Phaser.Game} game - the game instance
    * @param {Player} game - the player to update
