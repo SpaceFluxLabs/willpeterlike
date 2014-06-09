@@ -84,6 +84,12 @@ define(['Phaser',
    * export menu state
    */
 
+  MenuState.prototype.shutdown = function() {
+
+    this.game.app.firebase.off('value');
+    console.log('menu shutdown');
+
+  };
   return MenuState;
 });
 

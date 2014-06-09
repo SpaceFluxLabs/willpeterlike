@@ -81,7 +81,9 @@ define(['Phaser',
       );
       line = new Line(this.game, this.firebase, linePosition.x, linePosition.y);
       line.setVelocity(lineVelocity.x, lineVelocity.y);
-      line._save();
+     // line._save();
+      this.game.app.lines.push(line);
+
     }
   }
 
@@ -109,6 +111,25 @@ define(['Phaser',
       sides: this.polygon.sides
     }, callback);
   }
+
+  /**
+   * Serialize Player to object that can be saved to firebase
+   * @return {Object} - the object that will be sent to firebase
+   */ 
+  Player.prototype.serialize = function() {
+
+    return {
+      id: this.id,
+      type: this.type,
+      velocity: this.velocity,
+      coordinates: {
+        x: this.sprite.x,
+        y: this.sprite.y
+      },
+      direction: this.polygon.direction,
+      sides: this.polygon.sides
+    };
+  };
 
   Player.prototype.grow = function() {
     this.polygon.addSide();

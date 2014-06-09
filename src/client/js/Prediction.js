@@ -36,8 +36,6 @@ define(['Lodash' ], function( _ ) {
         body = player.sprite.body,
         adjustTimeInSeconds = Prediction.ADJUST_TIME / 1000,
         targetPosition = {},
-        adjustX,
-        adjustY,
         diffX,
         diffY
     ;

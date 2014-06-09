@@ -2,14 +2,16 @@ define(['Phaser',
     'Firebase',
     'Player',
     'Line',
-    'Prediction'
+    'Prediction',
+    'Lodash'
     ],
     function (
       Phaser,
       Firebase,
       Player,
       Line,
-      Prediction
+      Prediction,
+      _
     ) {
 
   'use strict';
@@ -43,14 +45,15 @@ define(['Phaser',
   MainState.prototype.create = function() {
 
     var firebase = this.game.app.firebase,
+        query = firebase.limit(2),
         self = this,
         player
     ;
 
-    firebase.on('child_added', function(snapshot) {
+    query.on('child_added', function(snapshot) {
       var data = snapshot.val(),
           type = data.type,
-          id = data.id,
+          id,
           filter,
           line,
           velocity,
@@ -58,7 +61,30 @@ define(['Phaser',
           position
       ;
 
-      if (type === "Player") {
+        _.forEach(data.players, function(savedPlayer) {
+
+          id = savedPlayer.id;
+          filter = players.filter(function(item) {
+            return item.id === id;
+          });
+
+          if(filter.length) {
+            player = filter[0];
+          } else {
+            player = new Player(id, self.game, firebase, false);
+            players.push(player);
+          }
+          
+          Prediction.adjust(latency + data.latency, player, savedPlayer);
+
+
+          player.polygon.sides = savedPlayer.sides;
+          player.polygon.direction = savedPlayer.direction;
+          player.draw();
+
+
+        });
+/*      if (type === "Player") {
         direction = data.direction;
         filter = players.filter(function(item) {
           return item.id === id;
@@ -75,7 +101,7 @@ define(['Phaser',
 
         player.polygon.sides = data.sides;
         player.polygon.direction = direction;
-    //    player.draw();
+        player.draw();
       }
       else if (type === "Line") {
         position = new Phaser.Point(data.position.x, data.position.y);
@@ -85,6 +111,7 @@ define(['Phaser',
         line.sprite.body.velocity = velocity;
         lines.push(line);
       }
+     */
     });
 
     // Create the current client's player object
@@ -107,9 +134,10 @@ define(['Phaser',
         end
     ;
 
-    if ((Math.random() * 100 | 0) === 0) {
+    if ((Math.random() * 1000 | 0) === 0) {
       line = new Line(this.game, firebase, Math.random() * this.game.width | 0, Math.random() * this.game.height | 0);
-      line._save();
+   //   line._save();
+      this.game.app.lines.push(line)
     }
     for (i = 0; i < lines.length; i++) {
       lines[i].draw();
@@ -121,7 +149,23 @@ define(['Phaser',
     // so we can include it with our packets and other clients use it for prediction
 
     start = Date.now();
-    thisPlayer.save(latency, function() {
+    /*thisPlayer.save(latency, function() {
+      end = Date.now();
+      latency = (end - start) / 2;
+    });
+*/
+    // snapshot holds our current world state
+    // so we can save everything from 1 frame as 1 obj
+    var snapshot = {
+      players: [thisPlayer.serialize()],
+      lines: _.map(this.game.app.lines, function(line) {
+        return line.serialize();
+      }),
+      latency: latency
+    };
+
+
+    firebase.push(snapshot, function() {
       end = Date.now();
       latency = (end - start) / 2;
     });
@@ -131,7 +175,9 @@ define(['Phaser',
   MainState.prototype.shutdown = function() {
 
     alert('wer');
+
   };
+
   /** 
    * export MainState
    */
