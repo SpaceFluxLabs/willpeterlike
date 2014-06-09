@@ -1,0 +1,31 @@
+{
+    "camelcase": true,
+    "curly": true,
+    "eqeqeq": true,
+    "forin": true,
+    "immed": true,
+    "indent": "2",
+    "latedef": true,
+    "newcap": true,
+    "undef": true,
+    "unused": true,
+    "strict": true,
+    "trailing": true,
+    "browser": true,
+    "devel": true,
+    "predef": ["define",
+               "require",
+               "describe",
+               "xdescribe",
+               "it",
+               "xit",
+               "beforeEach",
+               "before",
+               "afterEach",
+               "after",
+               "jasmine",
+               "expect",
+               "spyOn"
+              ]
+
+}
