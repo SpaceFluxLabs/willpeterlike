@@ -15,6 +15,10 @@ define(function() {
       ),
     },
 
+    load: {
+      image: jasmine.createSpy()
+    },
+
     physics: {
       enable: jasmine.createSpy(),
       arcade: jasmine.createSpy().and.returnValue(
