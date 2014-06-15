@@ -21,12 +21,45 @@ define(['Lodash' ], function( _) {
     var self = this,
         lines = game.app.lines,
         handler = _.partial(self.onLineCollision, player),
-        line
+        topLeft = { 
+          x: player.sprite.x,
+          y: player.sprite.y
+        },
+        bottomRight = {
+          x: topLeft.x + player.sprite.width,
+          y: topLeft.y + player.sprite.height
+        },
+        topBorder = 0,
+        leftBorder = 0,
+        rightBorder = game.width,
+        bottomBorder = game.height
     ;
 
     lines.forEach(function(line) {
       game.physics.arcade.collide(line.sprite, player.sprite, handler, null, self);
     });
+
+    // Check for borders
+    
+    if (topLeft.x  <= leftBorder && player.velocity.x < 0) {
+      player.sprite.x = leftBorder;
+      player.velocity.x = 0;
+    }
+
+    if (topLeft.y <= topBorder && player.velocity.y < 0) {
+      player.sprite.y = topBorder;
+      player.velocity.y = 0;
+    }
+
+    if (bottomRight.x >= rightBorder && player.velocity.x > 0) {
+      player.sprite.x = rightBorder - player.sprite.width;
+      player.velocity.x = 0;
+    }
+
+    if (bottomRight.y >= bottomBorder && player.velocity.y > 0) {
+      player.sprite.y = bottomBorder - player.sprite.height;
+      player.velocity.y = 0;
+    }
   };
 
   /** 
