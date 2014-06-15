@@ -28,7 +28,6 @@ define(['Phaser'], function(Phaser) {
 
     this.context.closePath();
     this.context.fill();
-
   };
 
   Phaser.BitmapData.prototype.line = function(line, strokeStyle) {
@@ -36,7 +35,10 @@ define(['Phaser'], function(Phaser) {
       this.context.strokeStyle = strokeStyle;
     }
 
-    var unitVelocity = line.getUnitVelocity();
+    var unitVelocity = {
+      x : 1,
+      y : 1
+    }
     var halfLength = line.lineLength / 2;
     this.context.beginPath();
     if (unitVelocity.x === 0 && unitVelocity.y === 0) {
@@ -48,5 +50,4 @@ define(['Phaser'], function(Phaser) {
     this.context.lineWidth = 1;
     this.context.stroke();
   };
-
 });

@@ -45,9 +45,9 @@ define(['Phaser',
           id = data.id,
           filter,
           line,
-          velocity,
+          position,
           direction,
-          position
+          speed
       ;
 
       if (type == "Player") {
@@ -71,10 +71,10 @@ define(['Phaser',
       }
       else if (type == "Missile") {
         position = new Phaser.Point(data.position.x, data.position.y);
-        velocity = new Phaser.Point(data.velocity.x, data.velocity.y);
-        line = new Missile(game, firebase, position.x, position.y);
-        line.setVelocity(data.velocity.x, data.velocity.y);
-        line.sprite.body.velocity = velocity;
+        direction = data.direction;
+        speed = data.speed;
+        line = new Missile(game, firebase, position.x, position.y, direction, speed);
+        line.sprite.body.velocity = new Phaser.Point(Math.cos(direction) * speed, Math.sin(direction) * speed);
         lines.push(line);
       }
     });

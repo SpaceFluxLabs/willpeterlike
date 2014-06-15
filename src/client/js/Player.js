@@ -16,7 +16,7 @@ define(['Phaser',
     ) {
   'use strict';
 
-  function Player(id, game, firebase,  shouldListen) {
+  function Player(id, game, firebase, shouldListen) {
 
     var grow,
         shrink
@@ -79,8 +79,7 @@ define(['Phaser',
         Math.cos(this.polygon.direction) * this.speed * 2,
         Math.sin(this.polygon.direction) * this.speed * 2
       );
-      line = new Missile(this.game, this.firebase, linePosition.x, linePosition.y);
-      line.setVelocity(lineVelocity.x, lineVelocity.y);
+      line = new Missile(this.game, this.firebase, linePosition.x, linePosition.y, this.polygon.direction, this.speed);
       line._save();
     }
   }
