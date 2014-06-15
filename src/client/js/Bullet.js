@@ -3,7 +3,6 @@ define(['Line', 'Lodash'], function(Line, _) {
 
     function Bullet(game, firebase, x, y) {
         Line.call(this, game, firebase, x, y);
-        this.type = "Bullet";
     }
 
     Bullet.prototype.setVelocity = function(x, y) {

@@ -1,7 +1,7 @@
 define(['Phaser',
     'Polygon',
     'utils/ColorGenerator',
-    'Bullet',
+    'Line',
     'PlayerInputComponent',
     'PlayerPhysicsComponent',
     'PhaserExt'
@@ -9,7 +9,7 @@ define(['Phaser',
     function(Phaser,
       Polygon,
       ColorGenerator,
-      Bullet,
+      Line,
       PlayerInputComponent,
       PlayerPhysicsComponent,
       PhaserExt
@@ -66,22 +66,22 @@ define(['Phaser',
   }
 
   Player.prototype.shoot = function() {
-    var bulletPosition,
-        bulletVelocity,
-        bullet;
+    var linePosition,
+        lineVelocity,
+        line;
 
     if (this.polygon.numSides() > 3) {
-      bulletPosition = new Phaser.Point(
+      linePosition = new Phaser.Point(
         this.sprite.body.center.x + this.polygon.radius * Math.cos(this.polygon.direction) * 2, 
         this.sprite.body.center.y + this.polygon.radius * Math.sin(this.polygon.direction) * 2
       );
-      bulletVelocity = new Phaser.Point(
+      lineVelocity = new Phaser.Point(
         Math.cos(this.polygon.direction) * this.speed * 2,
         Math.sin(this.polygon.direction) * this.speed * 2
       );
-      bullet = new Bullet(this.game, this.firebase, bulletPosition.x, bulletPosition.y);
-      bullet.setVelocity(bulletVelocity.x, bulletVelocity.y);
-      bullet._save();
+      line = new Line(this.game, this.firebase, linePosition.x, linePosition.y);
+      line.setVelocity(lineVelocity.x, lineVelocity.y);
+      line._save();
     }
   }
 
