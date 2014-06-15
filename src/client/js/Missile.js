@@ -6,8 +6,6 @@ define(['Line', 'Lodash'], function(Line, _) {
     this.type = "Missile";
   }
 
-
-
   // Inherit all of Line's prototypal properties into Missile
   Missile.prototype = _.create(Line.prototype);
 

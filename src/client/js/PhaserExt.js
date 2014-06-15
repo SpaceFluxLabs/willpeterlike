@@ -35,18 +35,10 @@ define(['Phaser'], function(Phaser) {
       this.context.strokeStyle = strokeStyle;
     }
 
-    var unitVelocity = {
-      x : 1,
-      y : 1
-    }
     var halfLength = line.lineLength / 2;
     this.context.beginPath();
-    if (unitVelocity.x === 0 && unitVelocity.y === 0) {
-      unitVelocity.x = 1;
-      unitVelocity.y = 1;
-    }
-    this.context.moveTo(halfLength * (unitVelocity.x + 1), halfLength * (unitVelocity.y + 1));
-    this.context.lineTo(halfLength * (-unitVelocity.x + 1), halfLength * (-unitVelocity.y + 1));
+    this.context.moveTo(halfLength * (Math.cos(line.direction) + 1), halfLength * (Math.sin(line.direction) + 1));
+    this.context.lineTo(halfLength * (-Math.cos(line.direction) + 1), halfLength * (-Math.sin(line.direction) + 1));
     this.context.lineWidth = 1;
     this.context.stroke();
   };
