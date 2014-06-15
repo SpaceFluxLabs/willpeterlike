@@ -80,7 +80,7 @@ define(['Phaser',
         Math.sin(this.polygon.direction) * this.speed * 2
       );
       line = new Missile(this.game, this.firebase, linePosition.x, linePosition.y, this.polygon.direction, this.speed);
-      line._save();
+      line.save();
     }
   }
 

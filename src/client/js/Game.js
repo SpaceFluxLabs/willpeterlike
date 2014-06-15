@@ -100,7 +100,7 @@ define(['Phaser',
 
     if ((Math.random() * 100 | 0) == 0) {
       line = new Missile(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0, 0, 0);
-      line._save();
+      line.save();
     }
     for (i = 0; i < lines.length; i++) {
       lines[i].draw();

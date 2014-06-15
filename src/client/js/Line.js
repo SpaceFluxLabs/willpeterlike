@@ -23,7 +23,7 @@ define(['Phaser'], function(Phaser) {
     this.sprite.body.collideWorldBounds = false;
   }
 
-  Line.prototype._save = function() {
+  Line.prototype.save = function() {
     this.firebase.push({
         type: this.type,
         position: this.position,
