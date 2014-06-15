@@ -1,14 +1,14 @@
 define(['Phaser',
     'Firebase',
     'Player',
-    'Line',
+    'Missile',
     'Prediction'
     ],
     function(
       Phaser,
       Firebase,
       Player,
-      Line,
+      Missile,
       Prediction  
     ) {
   'use strict';
@@ -69,10 +69,10 @@ define(['Phaser',
         player.polygon.direction = direction;
         player.draw();
       }
-      else if (type == "Line") {
+      else if (type == "Missile") {
         position = new Phaser.Point(data.position.x, data.position.y);
         velocity = new Phaser.Point(data.velocity.x, data.velocity.y);
-        line = new Line(game, firebase, position.x, position.y);
+        line = new Missile(game, firebase, position.x, position.y);
         line.setVelocity(data.velocity.x, data.velocity.y);
         line.sprite.body.velocity = velocity;
         lines.push(line);
@@ -98,10 +98,10 @@ define(['Phaser',
         end
     ;
 
-    if ((Math.random() * 100 | 0) == 0) {
-      line = new Line(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0);
-      line._save();
-    }
+    // if ((Math.random() * 100 | 0) == 0) {
+    //   line = new Missile(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0);
+    //   line._save();
+    // }
     for (i = 0; i < lines.length; i++) {
       lines[i].draw();
     }

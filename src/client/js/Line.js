@@ -2,6 +2,7 @@ define(['Phaser'], function(Phaser) {
   'use strict';
 
   function Line(game, firebase, x, y) {
+    this.type = "Line"
     this.firebase = firebase;
     this.position = new Phaser.Point(x,y);
     this.velocity = new Phaser.Point(0,0);
@@ -21,6 +22,26 @@ define(['Phaser'], function(Phaser) {
     this.sprite.body.collideWorldBounds = false;
   }
 
+  Line.prototype.setVelocity = function(x, y) {
+    this.velocity.x = x;
+    this.velocity.y = y;
+  }
+
+  Line.prototype.getUnitVelocity = function() {
+    var absVelocity = Math.sqrt(Math.pow(this.velocity.x, 2) + Math.pow(this.velocity.y,2));
+    if (absVelocity === 0) {
+      return {
+        x : 0,
+        y : 0
+      }
+    } else {
+      return {
+        x : this.velocity.x / absVelocity,
+        y : this.velocity.y / absVelocity
+      }
+    }
+  }
+
   Line.prototype._save = function() {
     this.firebase.push({
         type: this.type,
@@ -28,7 +49,7 @@ define(['Phaser'], function(Phaser) {
         velocity: this.velocity
     });
   }
-
+  
   Line.prototype.draw = function() {
     this.bitmap.clear();
     this.bitmap.line(this, '#FFFFFF');

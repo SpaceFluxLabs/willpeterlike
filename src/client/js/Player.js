@@ -1,7 +1,7 @@
 define(['Phaser',
     'Polygon',
     'utils/ColorGenerator',
-    'Line',
+    'Missile',
     'PlayerInputComponent',
     'PlayerPhysicsComponent',
     'PhaserExt'
@@ -9,7 +9,7 @@ define(['Phaser',
     function(Phaser,
       Polygon,
       ColorGenerator,
-      Line,
+      Missile,
       PlayerInputComponent,
       PlayerPhysicsComponent,
       PhaserExt
@@ -79,7 +79,7 @@ define(['Phaser',
         Math.cos(this.polygon.direction) * this.speed * 2,
         Math.sin(this.polygon.direction) * this.speed * 2
       );
-      line = new Line(this.game, this.firebase, linePosition.x, linePosition.y);
+      line = new Missile(this.game, this.firebase, linePosition.x, linePosition.y);
       line.setVelocity(lineVelocity.x, lineVelocity.y);
       line._save();
     }
