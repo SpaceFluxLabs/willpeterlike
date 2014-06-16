@@ -84,9 +84,7 @@ define(['Phaser',
       else if (type == "Ammo") {
         position = new Phaser.Point(data.position.x, data.position.y);
         direction = data.direction;
-        speed = data.speed;
-        ammo = new Ammo(game, firebase, position.x, position.y, direction, speed);
-        ammo.sprite.body.velocity = new Phaser.Point(Math.cos(direction) * speed, Math.sin(direction) * speed);
+        ammo = new Ammo(game, firebase, position.x, position.y, direction);
         ammos.push(ammo); 
       }
     });
@@ -113,18 +111,18 @@ define(['Phaser',
 
     // Randomly generates an ammo on the map
     if ((Math.random() * 100 | 0) == 0) {
-      ammo = new Ammo(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0, 0, 0);
+      ammo = new Ammo(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0, 0);
       ammo.save();
-    }
-
-    // Render all missiles
-    for (i = 0; i < missiles.length; ++i) {
-      missiles[i].draw();
     }
 
     // Render all ammos
     for (i = 0; i < ammos.length; ++i) {
       ammos[i].draw();
+    }
+
+    // Render all missiles
+    for (i = 0; i < missiles.length; ++i) {
+      missiles[i].draw();
     }
 
     thisPlayer.update(game);

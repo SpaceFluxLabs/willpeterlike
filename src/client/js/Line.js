@@ -1,12 +1,12 @@
 define(['Phaser'], function(Phaser) {
   'use strict';
 
-  function Line(game, firebase, x, y, direction, speed) {
+  function Line(game, firebase, x, y, direction) {
     this.type = "Line"
     this.firebase = firebase;
     this.position = new Phaser.Point(x,y);
     this.direction = direction;
-    this.speed = speed;
+    this.speed = 0;
     this.lineLength = 50;
 
     // Creates bitmap with dimention lineLength x lineLength
@@ -35,7 +35,7 @@ define(['Phaser'], function(Phaser) {
   
   Line.prototype.draw = function() {
     this.bitmap.clear();
-    this.bitmap.line(this, this.color);
+    this.bitmap.line(this, "#FFFFFF");
   }
 
   return Line;

@@ -14,8 +14,7 @@ define(['Ammo',
         ammo,
         x = 1,
         y = 2,
-        direction = 3,
-        speed = 4
+        direction = 3
     ;
 
     beforeEach(function() {
@@ -23,7 +22,7 @@ define(['Ammo',
       mockedGame = _.clone(MockGame, true);
       mockedFirebase = _.clone(MockFirebase, true);
 
-      ammo = new Ammo(mockedGame, mockedFirebase, x, y, direction, speed);
+      ammo = new Ammo(mockedGame, mockedFirebase, x, y, direction);
     });
 
     afterEach(function() {
@@ -34,7 +33,7 @@ define(['Ammo',
       expect(ammo.position.x).toBe(x);
       expect(ammo.position.y).toBe(y);
       expect(ammo.direction).toBe(direction);
-      expect(ammo.speed).toBe(speed);
+      expect(ammo.speed).toBe(0);
     });
   });
 })

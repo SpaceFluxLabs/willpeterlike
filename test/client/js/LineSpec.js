@@ -14,8 +14,7 @@ define(['Line',
         line,
         x = 1,
         y = 2,
-        direction = 3,
-        speed = 4
+        direction = 3
     ;
 
     beforeEach(function() {
@@ -23,7 +22,7 @@ define(['Line',
       mockedGame = _.clone(MockGame, true);
       mockedFirebase = _.clone(MockFirebase, true);
 
-      line = new Line(mockedGame, mockedFirebase, x, y, direction, speed);
+      line = new Line(mockedGame, mockedFirebase, x, y, direction);
     });
 
     afterEach(function() {
@@ -34,7 +33,7 @@ define(['Line',
       expect(line.position.x).toBe(x);
       expect(line.position.y).toBe(y);
       expect(line.direction).toBe(direction);
-      expect(line.speed).toBe(speed);
+      expect(line.speed).toBe(0);
     });
   });
 })

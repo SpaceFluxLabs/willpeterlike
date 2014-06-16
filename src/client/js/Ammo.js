@@ -1,8 +1,8 @@
 define(['Line', 'Lodash'], function(Line, _) {
   'use strict';
 
-  function Ammo(game, firebase, x, y, direction, speed) {
-    Line.call(this, game, firebase, x, y, direction, speed);
+  function Ammo(game, firebase, x, y, direction) {
+    Line.call(this, game, firebase, x, y, direction);
     this.type = "Ammo";
   }
 
