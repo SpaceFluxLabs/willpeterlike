@@ -19,7 +19,7 @@ define(['Lodash' ], function( _) {
   prototype.update = function(game, player) {
 
     var self = this,
-        lines = game.app.lines,
+        missiles = game.app.ammo,
         handler = _.partial(self.onLineCollision, player),
         topLeft = { 
           x: player.sprite.x,

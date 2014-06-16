@@ -1,21 +1,23 @@
 define(['Phaser',
     'Firebase',
     'Player',
-    'Line',
+    'Ammo',
+    'Missile',
     'Prediction'
     ],
     function(
       Phaser,
       Firebase,
       Player,
-      Line,
+      Ammo,
+      Missile,
       Prediction  
     ) {
   'use strict';
 
   var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim'),
       players = [],
-      lines = [],
+      missiles = [],
       CANVAS_WIDTH = 800,
       CANVAS_HEIGHT = 600,
       latency = 100,
@@ -44,10 +46,10 @@ define(['Phaser',
           type = data.type,
           id = data.id,
           filter,
-          line,
-          velocity,
+          missile,
+          position,
           direction,
-          position
+          speed
       ;
 
       if (type == "Player") {
@@ -69,13 +71,13 @@ define(['Phaser',
         player.polygon.direction = direction;
         player.draw();
       }
-      else if (type == "Line") {
+      else if (type == "Missile") {
         position = new Phaser.Point(data.position.x, data.position.y);
-        velocity = new Phaser.Point(data.velocity.x, data.velocity.y);
-        line = new Line(game, firebase, position.x, position.y);
-        line.setVelocity(data.velocity.x, data.velocity.y);
-        line.sprite.body.velocity = velocity;
-        lines.push(line);
+        direction = data.direction;
+        speed = data.speed;
+        missile = new Missile(game, firebase, position.x, position.y, direction, speed);
+        missile.sprite.body.velocity = new Phaser.Point(Math.cos(direction) * speed, Math.sin(direction) * speed);
+        missiles.push(missile);
       }
     });
 
@@ -86,24 +88,24 @@ define(['Phaser',
 
     //put our game's data under game.app
     game.app = {};
-    game.app.lines = lines;
+    game.app.missiles = missiles;
     game.app.players = players;
   }
 
   var counter = 0;
   function update() {
     var i,
-        line,
+        missile,
         start,
         end
     ;
 
     if ((Math.random() * 100 | 0) == 0) {
-      line = new Line(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0);
-      line._save();
+      missile = new Missile(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0, 0, 0);
+      missile.save();
     }
-    for (i = 0; i < lines.length; i++) {
-      lines[i].draw();
+    for (i = 0; i < missiles.length; i++) {
+      missiles[i].draw();
     }
 
     thisPlayer.update(game);
