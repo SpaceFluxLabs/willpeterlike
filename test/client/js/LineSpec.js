@@ -22,7 +22,7 @@ define(['Line',
       jasmine.clock().install();
       mockedGame = _.clone(MockGame, true);
       mockedFirebase = _.clone(MockFirebase, true);
-      
+
       line = new Line(mockedGame, mockedFirebase, x, y, direction, speed);
     });
 
@@ -31,8 +31,8 @@ define(['Line',
     });
 
     it('should instantiate', function() {
-      expect(line.x).toBe(x);
-      expect(line.y).toBe(y);
+      expect(line.position.x).toBe(x);
+      expect(line.position.y).toBe(y);
       expect(line.direction).toBe(direction);
       expect(line.speed).toBe(speed);
     });

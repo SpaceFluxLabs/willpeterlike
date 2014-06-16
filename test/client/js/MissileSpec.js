@@ -31,8 +31,8 @@ define(['Missile',
     });
 
     it('should instantiate', function() {
-      expect(missile.x).toBe(x);
-      expect(missile.y).toBe(y);
+      expect(missile.position.x).toBe(x);
+      expect(missile.position.y).toBe(y);
       expect(missile.direction).toBe(direction);
       expect(missile.speed).toBe(speed);
     });

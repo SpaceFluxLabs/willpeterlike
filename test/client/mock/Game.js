@@ -10,7 +10,10 @@ define(function() {
       sprite: jasmine.createSpy().and.returnValue(
         {
           x: jasmine.createSpy(),
-          y: jasmine.createSpy()
+          y: jasmine.createSpy(),
+          anchor: {
+              setTo: jasmine.createSpy()  
+          }
         }
       ),
     },
