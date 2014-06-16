@@ -11,22 +11,18 @@ define(['Line',
   describe('Line class', function() {
     var mockedGame,
         mockedFirebase,
-        Line,
-        x,
-        y,
-        direction,
-        speed
+        line,
+        x = 1,
+        y = 2,
+        direction = 3,
+        speed = 4
     ;
 
     beforeEach(function() {
       jasmine.clock().install();
       mockedGame = _.clone(MockGame, true);
       mockedFirebase = _.clone(MockFirebase, true);
-
-      x = 1;
-      y = 2;
-      direction = 3;
-      speed = 4;
+      
       line = new Line(mockedGame, mockedFirebase, x, y, direction, speed);
     });
 
@@ -41,4 +37,4 @@ define(['Line',
       expect(line.speed).toBe(speed);
     });
   });
-}
+})

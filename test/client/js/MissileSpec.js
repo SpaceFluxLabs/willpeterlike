@@ -41,4 +41,4 @@ define(['Missile',
       expect(missile.speed).toBe(speed);
     });
   });
-}
+})

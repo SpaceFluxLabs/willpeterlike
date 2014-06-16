@@ -1,6 +1,7 @@
 define(['Phaser',
     'Firebase',
     'Player',
+    'Ammo',
     'Missile',
     'Prediction'
     ],
@@ -8,6 +9,7 @@ define(['Phaser',
       Phaser,
       Firebase,
       Player,
+      Ammo,
       Missile,
       Prediction  
     ) {
@@ -15,7 +17,7 @@ define(['Phaser',
 
   var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim'),
       players = [],
-      lines = [],
+      missiles = [],
       CANVAS_WIDTH = 800,
       CANVAS_HEIGHT = 600,
       latency = 100,
@@ -44,7 +46,7 @@ define(['Phaser',
           type = data.type,
           id = data.id,
           filter,
-          line,
+          missile,
           position,
           direction,
           speed
@@ -73,9 +75,9 @@ define(['Phaser',
         position = new Phaser.Point(data.position.x, data.position.y);
         direction = data.direction;
         speed = data.speed;
-        line = new Missile(game, firebase, position.x, position.y, direction, speed);
-        line.sprite.body.velocity = new Phaser.Point(Math.cos(direction) * speed, Math.sin(direction) * speed);
-        lines.push(line);
+        missile = new Missile(game, firebase, position.x, position.y, direction, speed);
+        missile.sprite.body.velocity = new Phaser.Point(Math.cos(direction) * speed, Math.sin(direction) * speed);
+        missiles.push(missile);
       }
     });
 
@@ -86,24 +88,24 @@ define(['Phaser',
 
     //put our game's data under game.app
     game.app = {};
-    game.app.lines = lines;
+    game.app.missiles = missiles;
     game.app.players = players;
   }
 
   var counter = 0;
   function update() {
     var i,
-        line,
+        missile,
         start,
         end
     ;
 
     if ((Math.random() * 100 | 0) == 0) {
-      line = new Missile(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0, 0, 0);
-      line.save();
+      missile = new Missile(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0, 0, 0);
+      missile.save();
     }
-    for (i = 0; i < lines.length; i++) {
-      lines[i].draw();
+    for (i = 0; i < missiles.length; i++) {
+      missiles[i].draw();
     }
 
     thisPlayer.update(game);
