@@ -18,6 +18,7 @@ define(['Phaser',
   var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim'),
       players = [],
       missiles = [],
+      ammos = [],
       CANVAS_WIDTH = 800,
       CANVAS_HEIGHT = 600,
       latency = 100,
@@ -47,6 +48,7 @@ define(['Phaser',
           id = data.id,
           filter,
           missile,
+          ammo,
           position,
           direction,
           speed
@@ -79,6 +81,14 @@ define(['Phaser',
         missile.sprite.body.velocity = new Phaser.Point(Math.cos(direction) * speed, Math.sin(direction) * speed);
         missiles.push(missile);
       }
+      else if (type == "Ammo") {
+        position = new Phaser.Point(data.position.x, data.position.y);
+        direction = data.direction;
+        speed = data.speed;
+        ammo = new Ammo(game, firebase, position.x, position.y, direction, speed);
+        ammo.sprite.body.velocity = new Phaser.Point(Math.cos(direction) * speed, Math.sin(direction) * speed);
+        ammos.push(ammo); 
+      }
     });
 
     // Create the current client's player object
@@ -89,23 +99,32 @@ define(['Phaser',
     //put our game's data under game.app
     game.app = {};
     game.app.missiles = missiles;
+    game.app.ammos = ammos;
     game.app.players = players;
   }
 
   var counter = 0;
   function update() {
     var i,
-        missile,
+        ammo,
         start,
         end
     ;
 
+    // Randomly generates an ammo on the map
     if ((Math.random() * 100 | 0) == 0) {
-      missile = new Missile(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0, 0, 0);
-      missile.save();
+      ammo = new Ammo(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0, 0, 0);
+      ammo.save();
     }
-    for (i = 0; i < missiles.length; i++) {
+
+    // Render all missiles
+    for (i = 0; i < missiles.length; ++i) {
       missiles[i].draw();
+    }
+
+    // Render all ammos
+    for (i = 0; i < ammos.length; ++i) {
+      ammos[i].draw();
     }
 
     thisPlayer.update(game);

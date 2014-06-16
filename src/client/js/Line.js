@@ -14,13 +14,10 @@ define(['Phaser'], function(Phaser) {
 
     // Adds the bitmap to a sprite at location (x,y)
     this.sprite = game.add.sprite(x, y, this.bitmap);
-
+    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
+    
     // Sets the sprite anchor to center instead of corner
     this.sprite.anchor.setTo(0.5,0.5);
-
-    game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-
-    this.sprite.body.collideWorldBounds = false;
   }
 
   Line.prototype.save = function() {

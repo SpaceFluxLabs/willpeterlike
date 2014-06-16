@@ -3,7 +3,7 @@ define(['Missile',
     'Mock/Firebase',
     'Lodash'
     ],
-    function(Line,
+    function(Missile,
       MockGame,
       MockFirebase,
       _
@@ -11,11 +11,11 @@ define(['Missile',
   describe('Missile class', function() {
     var mockedGame,
         mockedFirebase,
-        Missile,
-        x,
-        y,
-        direction,
-        speed
+        missile,
+        x = 1,
+        y = 2,
+        direction = 3,
+        speed = 4
     ;
 
     beforeEach(function() {
@@ -23,10 +23,6 @@ define(['Missile',
       mockedGame = _.clone(MockGame, true);
       mockedFirebase = _.clone(MockFirebase, true);
 
-      x = 1;
-      y = 2;
-      direction = 3;
-      speed = 4;
       missile = new Missile(mockedGame, mockedFirebase, x, y, direction, speed);
     });
 

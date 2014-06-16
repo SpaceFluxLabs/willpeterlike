@@ -19,13 +19,13 @@ define(['Lodash' ], function( _) {
   prototype.update = function(game, player) {
 
     var self = this,
-        missiles = game.app.ammo,
+        ammos = game.app.ammos,
         handler = _.partial(self.onLineCollision, player),
-        line
+        ammo
     ;
 
-    lines.forEach(function(line) {
-      game.physics.arcade.collide(line.sprite, player.sprite, handler, null, self);
+    ammos.forEach(function(ammo) {
+      game.physics.arcade.collide(ammo.sprite, player.sprite, handler, null, self);
     });
   };
 

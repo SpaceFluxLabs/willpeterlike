@@ -66,21 +66,17 @@ define(['Phaser',
   }
 
   Player.prototype.shoot = function() {
-    var linePosition,
-        lineVelocity,
-        line;
+    var missile,
+        missilePosition
+    ;
 
     if (this.polygon.numSides() > 3) {
-      linePosition = new Phaser.Point(
+      missilePosition = new Phaser.Point(
         this.sprite.body.center.x + this.polygon.radius * Math.cos(this.polygon.direction) * 2, 
         this.sprite.body.center.y + this.polygon.radius * Math.sin(this.polygon.direction) * 2
       );
-      lineVelocity = new Phaser.Point(
-        Math.cos(this.polygon.direction) * this.speed * 2,
-        Math.sin(this.polygon.direction) * this.speed * 2
-      );
-      line = new Missile(this.game, this.firebase, linePosition.x, linePosition.y, this.polygon.direction, this.speed);
-      line.save();
+      missile = new Missile(this.game, this.firebase, missilePosition.x, missilePosition.y, this.polygon.direction, this.speed);
+      missile.save();
     }
   }
 
