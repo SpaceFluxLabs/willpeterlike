@@ -36,7 +36,7 @@ define(['PlayerPhysicsComponent',
 
         ammo.destroy = jasmine.createSpy();
 
-        component.onLineCollision(player, ammo, player.sprite);
+        component.onAmmoCollision(player, ammo, player.sprite);
         expect(ammo.destroy).toHaveBeenCalled();
       });
 
@@ -46,7 +46,7 @@ define(['PlayerPhysicsComponent',
 
         ammo.destroy = jasmine.createSpy();
 
-        component.onLineCollision(player, ammo, player.sprite);
+        component.onAmmoCollision(player, ammo, player.sprite);
         expect(player.grow).toHaveBeenCalled();
       });
     });
@@ -72,14 +72,13 @@ define(['PlayerPhysicsComponent',
             collideCallback(obj1, obj2);
           });
 
-        spyOn(component, 'onLineCollision');
+        spyOn(component, 'onAmmoCollision');
         component.update(game, player);
 
         _.range(numAmmos)
          .forEach(function(index) {
            ammo = ammos[index];
-           expect(component.onLineCollision).toHaveBeenCalledWith(player, 
-              ammo.sprite, player.sprite);
+           expect(component.onAmmoCollision).toHaveBeenCalledWith(player, ammo.sprite, player.sprite);
          });
       });
     })

@@ -20,12 +20,19 @@ define(['Lodash' ], function( _) {
 
     var self = this,
         ammos = game.app.ammos,
-        handler = _.partial(self.onLineCollision, player),
-        ammo
+        ammoHandler = _.partial(self.onAmmoCollision, player),
+        ammo,
+        missiles = game.app.missiles,
+        missileHandler = _.partial(self.onMissileCollision, player),
+        missile
     ;
 
     ammos.forEach(function(ammo) {
-      game.physics.arcade.collide(ammo.sprite, player.sprite, handler, null, self);
+      game.physics.arcade.collide(ammo.sprite, player.sprite, ammoHandler, null, self);
+    });
+
+    missiles.forEach(function(missile) {
+      game.physics.arcade.collide(missile.sprite, player.sprite, missileHandler, null, self);
     });
   };
 
@@ -36,9 +43,14 @@ define(['Lodash' ], function( _) {
    * @param {Phaser.Sprite} lineSprite - the line we're checking player against
    * @Param {Phaser.Sprite} [polygonSprite] - the player's polygon
    */
-  prototype.onLineCollision = function(player, lineSprite, polygonSprite) {
-    lineSprite.destroy();
+  prototype.onAmmoCollision = function(player, ammoSprite, polygonSprite) {
+    ammoSprite.destroy();
     player.grow();
+  };
+
+  prototype.onMissileCollision = function(player, missileSprite, polygonSprite) {
+    missileSprite.destroy();
+    player.shrink();
   };
 
   return PlayerPhysicsComponent;
