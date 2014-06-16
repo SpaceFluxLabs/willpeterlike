@@ -27,7 +27,8 @@ define(function() {
       )
     },
     app: {
-      lines: []
+      missiles: [],
+      ammos: []
     },
 
     input: { 

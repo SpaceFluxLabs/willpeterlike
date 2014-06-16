@@ -29,42 +29,42 @@ define(['PlayerPhysicsComponent',
       game = _.clone(MockGame, true);
     });
 
-    describe('.onLineCollision', function() {
-      it('should destroy the line', function() {
-        var line = jasmine.createSpy()
+    describe('.onAmmoCollision', function() {
+      it('should destroy the ammo', function() {
+        var ammo = jasmine.createSpy()
         ;
 
-        line.destroy = jasmine.createSpy();
+        ammo.destroy = jasmine.createSpy();
 
-        component.onLineCollision(player, line, player.sprite);
-        expect(line.destroy).toHaveBeenCalled();
+        component.onLineCollision(player, ammo, player.sprite);
+        expect(ammo.destroy).toHaveBeenCalled();
       });
 
       it('should grow the player', function() {
-        var line = jasmine.createSpy()
+        var ammo = jasmine.createSpy()
         ;
 
-        line.destroy = jasmine.createSpy();
+        ammo.destroy = jasmine.createSpy();
 
-        component.onLineCollision(player, line, player.sprite);
+        component.onLineCollision(player, ammo, player.sprite);
         expect(player.grow).toHaveBeenCalled();
       });
     });
 
     describe('.update', function() {
-      it('should call onLineCollision for each line sprite', function() {
-        var lines = [],
-            numLines = 5,
-            line 
+      it('should call onAmmoCollision for each line sprite', function() {
+        var ammos = [],
+            numAmmos = 5,
+            ammo 
         ;
 
-        game.app.lines = lines;
+        game.app.ammos = ammos;
 
-        _.range(numLines)
+        _.range(numAmmos)
          .forEach(function(index) {
-           lines[index] = jasmine.createSpy();
-           lines[index].sprite = jasmine.createSpy();
-           lines[index].sprite.destroy = jasmine.createSpy();
+           ammos[index] = jasmine.createSpy();
+           ammos[index].sprite = jasmine.createSpy();
+           ammos[index].sprite.destroy = jasmine.createSpy();
          });
         
         game.physics.arcade.collide = jasmine.createSpy()
@@ -75,11 +75,11 @@ define(['PlayerPhysicsComponent',
         spyOn(component, 'onLineCollision');
         component.update(game, player);
 
-        _.range(numLines)
+        _.range(numAmmos)
          .forEach(function(index) {
-           line = lines[index];
+           ammo = ammos[index];
            expect(component.onLineCollision).toHaveBeenCalledWith(player, 
-              line.sprite, player.sprite);
+              ammo.sprite, player.sprite);
          });
       });
     })
