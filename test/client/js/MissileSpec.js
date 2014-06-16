@@ -19,15 +19,10 @@ define(['Missile',
     ;
 
     beforeEach(function() {
-      jasmine.clock().install();
       mockedGame = _.clone(MockGame, true);
       mockedFirebase = _.clone(MockFirebase, true);
 
       missile = new Missile(mockedGame, mockedFirebase, x, y, direction, speed);
-    });
-
-    afterEach(function() {
-      jasmine.clock().uninstall();
     });
 
     it('should instantiate', function() {

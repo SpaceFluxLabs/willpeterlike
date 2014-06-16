@@ -21,10 +21,8 @@ define(['Lodash' ], function( _) {
     var self = this,
         ammos = game.app.ammos,
         ammoHandler = _.partial(self.onAmmoCollision, player),
-        ammo,
         missiles = game.app.missiles,
-        missileHandler = _.partial(self.onMissileCollision, player),
-        missile
+        missileHandler = _.partial(self.onMissileCollision, player)
     ;
 
     ammos.forEach(function(ammo) {

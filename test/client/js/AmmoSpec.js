@@ -18,15 +18,10 @@ define(['Ammo',
     ;
 
     beforeEach(function() {
-      jasmine.clock().install();
       mockedGame = _.clone(MockGame, true);
       mockedFirebase = _.clone(MockFirebase, true);
 
       ammo = new Ammo(mockedGame, mockedFirebase, x, y, direction);
-    });
-
-    afterEach(function() {
-      jasmine.clock().uninstall();
     });
 
     it('should instantiate', function() {

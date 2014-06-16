@@ -18,15 +18,10 @@ define(['Line',
     ;
 
     beforeEach(function() {
-      jasmine.clock().install();
       mockedGame = _.clone(MockGame, true);
       mockedFirebase = _.clone(MockFirebase, true);
 
       line = new Line(mockedGame, mockedFirebase, x, y, direction);
-    });
-
-    afterEach(function() {
-      jasmine.clock().uninstall();
     });
 
     it('should instantiate', function() {
