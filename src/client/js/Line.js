@@ -15,9 +15,13 @@ define(['Phaser'], function(Phaser) {
     // Adds the bitmap to a sprite at location (x,y)
     this.sprite = game.add.sprite(x, y, this.bitmap);
     game.physics.enable(this.sprite, Phaser.Physics.ARCADE);
-    
+
     // Sets the sprite anchor to center instead of corner
     this.sprite.anchor.setTo(0.5,0.5);
+  }
+
+  Line.prototype.setColor = function(color) {
+    this.color = color;
   }
 
   Line.prototype.save = function() {
@@ -31,7 +35,7 @@ define(['Phaser'], function(Phaser) {
   
   Line.prototype.draw = function() {
     this.bitmap.clear();
-    this.bitmap.line(this, '#FFFFFF');
+    this.bitmap.line(this, this.color);
   }
 
   return Line;
