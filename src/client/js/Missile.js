@@ -5,6 +5,7 @@ define(['Line', 'Lodash'], function(Line, _) {
     Line.call(this, game, firebase, x, y, direction);
     this.speed = speed;
     this.type = "Missile";
+    //this.color = "#FF0000";
   }
 
   // Inherit all of Line's prototypal properties into Missile

@@ -7,6 +7,7 @@ define(['Phaser'], function(Phaser) {
     this.position = new Phaser.Point(x,y);
     this.direction = direction;
     this.speed = 0;
+    this.color = "#FFFFFF";
     this.lineLength = 50;
 
     // Creates bitmap with dimention lineLength x lineLength
@@ -29,13 +30,14 @@ define(['Phaser'], function(Phaser) {
         type: this.type,
         position: this.position,
         direction: this.direction,
-        speed: this.speed
+        speed: this.speed,
+        color: this.color
     });
   }
   
   Line.prototype.draw = function() {
     this.bitmap.clear();
-    this.bitmap.line(this, "#FFFFFF");
+    this.bitmap.line(this, this.color);
   }
 
   return Line;

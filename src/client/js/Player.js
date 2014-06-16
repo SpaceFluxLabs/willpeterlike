@@ -76,6 +76,7 @@ define(['Phaser',
         this.sprite.body.center.y + this.polygon.radius * Math.sin(this.polygon.direction) * 2
       );
       missile = new Missile(this.game, this.firebase, missilePosition.x, missilePosition.y, this.polygon.direction, this.speed);
+      missile.setColor(this.color);
       missile.save();
     }
   }

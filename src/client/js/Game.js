@@ -51,7 +51,8 @@ define(['Phaser',
           ammo,
           position,
           direction,
-          speed
+          speed,
+          color
       ;
 
       if (type == "Player") {
@@ -77,7 +78,9 @@ define(['Phaser',
         position = new Phaser.Point(data.position.x, data.position.y);
         direction = data.direction;
         speed = data.speed;
+        color = data.color;
         missile = new Missile(game, firebase, position.x, position.y, direction, speed);
+        missile.setColor(color);
         missile.sprite.body.velocity = new Phaser.Point(Math.cos(direction) * speed, Math.sin(direction) * speed);
         missiles.push(missile);
       }
