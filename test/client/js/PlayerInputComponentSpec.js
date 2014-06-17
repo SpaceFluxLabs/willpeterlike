@@ -70,7 +70,7 @@ define(['PlayerInputComponent',
 
       it('should slow object by rate of acceleration if W is not down', function() {
         isDownSpy.and.callFake(function(key) {
-          if (key === keys.A) {
+          if (key === keys.W) {
             return true;
           }
         });         
