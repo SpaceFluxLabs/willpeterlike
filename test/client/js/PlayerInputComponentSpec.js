@@ -68,6 +68,28 @@ define(['PlayerInputComponent',
         
       });
 
+      it('should slow object by rate of acceleration if W is not down', function() {
+        isDownSpy.and.callFake(function(key) {
+          if (key === keys.A) {
+            return true;
+          }
+        });         
+        
+        component.update(game, player);
+        tempVelocityX = player.velocity.x;
+        tempVelocityY = player.velocity.y;
+        
+         isDownSpy.and.callFake(function(key) {
+          if (key === keys.W) {
+            return false;
+          }
+         });
+         
+         component.update(game, player);
+         expect(tempVelocityX).toEqual(player.velocity.x * component.FRICTION);
+         expect(tempVelocityY).toEqual(player.velocity.y * component.FRICTION);
+      });
+
       it('should set forward velocity if W is down', function() {
         isDownSpy.and.callFake(function(key) {
           if (key === keys.W) {

@@ -21,7 +21,6 @@ define(['Phaser',
         shrink
     ;
 
-    this.speed = 300;
     this.game = game;
     this.bitmap = game.add.bitmapData(100, 100);
     this.type = "Player";

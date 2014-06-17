@@ -2,9 +2,9 @@ define(['Lodash' ], function( _ ) {
 
   var prototype = PlayerInputComponent.prototype,
       BASE_VELOCITY = PlayerInputComponent.BASE_VELOCITY = 100,
-      FRICTION = PlayerInputComponent.FRICTION = 0.90,
-      ROTATION = PlayerInputComponent.ROTATION = Math.PI / 36,
-      TOP_SPEED = PlayerInputComponent.TOP_SPEED = 400
+      FRICTION = PlayerInputComponent.FRICTION = 0.95,
+      ROTATION = PlayerInputComponent.ROTATION = Math.PI / 18,
+      TOP_SPEED = PlayerInputComponent.TOP_SPEED = 300
   ;
 
   /**

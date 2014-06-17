@@ -6,7 +6,7 @@ define(function() {
     this.radius = radius;
     this.direction = 0;
     this.speed = 100;
-    this.acceleration = 10;
+    this.acceleration = 2.5;
   }
 
   Polygon.prototype.translate = function (dx, dy) {
