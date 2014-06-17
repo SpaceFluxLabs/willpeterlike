@@ -2,50 +2,45 @@ define(['Phaser',
     'Firebase',
     'Player',
     'Line',
-    'Prediction',
-    'states/Menu',
-    'states/Main'
+    'Prediction'
     ],
-    function(
+    function (
       Phaser,
       Firebase,
       Player,
       Line,
-      Prediction,
-      Menu,
-      Main
+      Prediction
     ) {
+
   'use strict';
 
-  var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim'),
-      players = [],
+  var players = [],
       lines = [],
-      CANVAS_WIDTH = 800,
-      CANVAS_HEIGHT = 600,
       latency = 100,
-      game,
       thisPlayer
   ;
 
-  firebase.remove(function() {
-    var divID = 'phaser';
-    //game = new Phaser.Game(CANVAS_WIDTH,CANVAS_HEIGHT,Phaser.CANVAS, divID, {preload: preload, create: create, update: update});
-    game = new Phaser.Game(CANVAS_WIDTH,CANVAS_HEIGHT,Phaser.CANVAS, divID);
-    game.state.add('menu', Menu);
-    game.state.add('main', Main);
-    game.state.start('menu');
-  });
+  /**
+   * Create the main game state
+   */
 
-  function preload() {
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.stage.backgroundColor = '#0000FF';
+  var MainState = function() {
+  };
+
+
+  MainState.prototype.preload = function() {
+    this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    this.game.stage.backgroundColor = '#0000FF';
 
     // Don't pause game if tab loses focus
-    game.stage.disableVisibilityChange = true;
-  }
+    this.game.stage.disableVisibilityChange = true;
+  };
 
-  function create() {
-    var player;
+  MainState.prototype.create = function() {
+
+    var player,
+        firebase = this.game.app.firebase
+    ;
 
     firebase.on('child_added', function(snapshot) {
       var data = snapshot.val(),
@@ -58,7 +53,7 @@ define(['Phaser',
           position
       ;
 
-      if (type == "Player") {
+      if (type === "Player") {
         direction = data.direction;
         filter = players.filter(function(item) {
           return item.id === id;
@@ -67,7 +62,7 @@ define(['Phaser',
         if(filter.length) {
           player = filter[0];
         } else {
-          player = new Player(id, game, firebase, false);
+          player = new Player(id, this.game, firebase, false);
           players.push(player);
         }
         
@@ -77,10 +72,10 @@ define(['Phaser',
         player.polygon.direction = direction;
         player.draw();
       }
-      else if (type == "Line") {
+      else if (type === "Line") {
         position = new Phaser.Point(data.position.x, data.position.y);
         velocity = new Phaser.Point(data.velocity.x, data.velocity.y);
-        line = new Line(game, firebase, position.x, position.y);
+        line = new Line(this.game, firebase, position.x, position.y);
         line.setVelocity(data.velocity.x, data.velocity.y);
         line.sprite.body.velocity = velocity;
         lines.push(line);
@@ -88,33 +83,34 @@ define(['Phaser',
     });
 
     // Create the current client's player object
-    player = new Player(Date.now(), game, firebase,  true);
+    player = new Player(Date.now(), this.game, firebase,  true);
     thisPlayer = player;
     players.push(player);
 
     //put our game's data under game.app
-    game.app = {};
-    game.app.lines = lines;
-    game.app.players = players;
-  }
+    this.game.app.lines = lines;
+    this.game.app.players = players;
 
-  var counter = 0;
-  function update() {
-    var i,
+  };
+
+  MainState.prototype.update = function() {
+
+    var firebase = this.game.app.firebase,
+        i,
         line,
         start,
         end
     ;
 
-    if ((Math.random() * 100 | 0) == 0) {
-      line = new Line(game, firebase, Math.random() * CANVAS_WIDTH | 0, Math.random() * CANVAS_HEIGHT | 0);
+    if ((Math.random() * 100 | 0) === 0) {
+      line = new Line(this.game, firebase, Math.random() * this.game.width | 0, Math.random() * this.game.height | 0);
       line._save();
     }
     for (i = 0; i < lines.length; i++) {
       lines[i].draw();
     }
 
-    thisPlayer.update(game);
+    thisPlayer.update(this.game);
 
     // Calculate the latest latency from client to firebase 
     // so we can include it with our packets and other clients use it for prediction
@@ -124,5 +120,6 @@ define(['Phaser',
       end = Date.now();
       latency = (end - start) / 2;
     });
-  }
+
+  };
 });

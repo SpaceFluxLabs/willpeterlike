@@ -17,24 +17,34 @@ define(['Phaser',
 
   MenuState.prototype.preload = function() {
 
-    this.game.load.image('btn', 'assest/sprites/spacebar.png');
+    this.game.load.image('btn', 'assets/sprites/spacebar.png');
   };
 
   MenuState.prototype.create = function() {
 
 
-    game.add.button(100, 100, 'btn', newGame);
+    this.game.add.button(100, 100, 'btn', this.createGame);
+    this.game.add.button(100, 300, 'btn', this.joinGame);
 
-    game.add.button(100, 300, 'btn', joinGame);
+    this.game.app = {};
+
+  };
+
+
+
+  MenuState.prototype.createGame = function() {
+
+    var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com'),
+        id = Date.now()
+    ;
+
+    this.game.app.firebase = firebase.child(id);
+    this.game.state.start('main');
 
   };
 
 
-  function newGame() {
-
-  };
-
-  function joinGame() {
+  MenuState.prototype.joinGame = function() {
 
   };
   /**
