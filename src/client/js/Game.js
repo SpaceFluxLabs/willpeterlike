@@ -27,14 +27,25 @@ define(['Phaser',
       thisPlayer
   ;
 
-  firebase.remove(function() {
     var divID = 'phaser';
     //game = new Phaser.Game(CANVAS_WIDTH,CANVAS_HEIGHT,Phaser.CANVAS, divID, {preload: preload, create: create, update: update});
     game = new Phaser.Game(CANVAS_WIDTH,CANVAS_HEIGHT,Phaser.CANVAS, divID);
     game.state.add('menu', Menu);
     game.state.add('main', Main);
+    
+    game.state.start('menu');
+
+  /* firebase.remove(function() {
+    var divID = 'phaser';
+    //game = new Phaser.Game(CANVAS_WIDTH,CANVAS_HEIGHT,Phaser.CANVAS, divID, {preload: preload, create: create, update: update});
+    game = new Phaser.Game(CANVAS_WIDTH,CANVAS_HEIGHT,Phaser.CANVAS, divID);
+    game.state.add('menu', Menu);
+    game.state.add('main', Main);
+    
     game.state.start('menu');
   });
+
+ */
 
   function preload() {
     game.physics.startSystem(Phaser.Physics.ARCADE);

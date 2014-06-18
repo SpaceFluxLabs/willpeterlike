@@ -22,11 +22,38 @@ define(['Phaser',
 
   MenuState.prototype.create = function() {
 
+    var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com'),
+        style = { font: "25px Arial", fill: "#FFFFFF", align: "center" },
+        self = this
+    ;
 
-    this.game.add.button(100, 100, 'btn', this.createGame);
-    this.game.add.button(100, 300, 'btn', this.joinGame);
+    firebase.once('value', function(data) {
 
+      var i = 0
+      ;
+
+      data.forEach(function(snapshot) { 
+
+        var gameId = snapshot.name(),
+            text = new Phaser.Text(self.game, 50, 50, gameId, style),
+            handler = self.joinGame.bind(self, gameId),
+            btn = self.game.add.button(100, 300 + i * 50, '', handler)
+        ;
+
+        text.anchor.set(0.5);
+        btn.addChild(text);
+        
+        console.log(gameId);
+        i++;
+      });
+
+    });
+    
     this.game.app = {};
+    this.game.add.button(100, 100, 'btn', this.createGame);
+
+
+    this.game.app.firebase = firebase;
 
   };
 
@@ -34,8 +61,8 @@ define(['Phaser',
 
   MenuState.prototype.createGame = function() {
 
-    var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com'),
-        id = Date.now()
+    var id = Date.now(),
+        firebase = this.game.app.firebase
     ;
 
     this.game.app.firebase = firebase.child(id);
@@ -44,8 +71,14 @@ define(['Phaser',
   };
 
 
-  MenuState.prototype.joinGame = function() {
+  MenuState.prototype.joinGame = function(gameId) {
 
+    var firebase = this.game.app.firebase
+    ;
+
+    console.log('join ', gameId);
+    this.game.app.firebase = firebase.child(gameId);
+    this.game.state.start('main');
   };
   /**
    * export menu state

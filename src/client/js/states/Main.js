@@ -34,12 +34,17 @@ define(['Phaser',
 
     // Don't pause game if tab loses focus
     this.game.stage.disableVisibilityChange = true;
+    
+    window.addEventListener('beforeunload', function(evt) {
+
+    });
   };
 
   MainState.prototype.create = function() {
 
-    var player,
-        firebase = this.game.app.firebase
+    var firebase = this.game.app.firebase,
+        self = this,
+        player
     ;
 
     firebase.on('child_added', function(snapshot) {
@@ -62,7 +67,7 @@ define(['Phaser',
         if(filter.length) {
           player = filter[0];
         } else {
-          player = new Player(id, this.game, firebase, false);
+          player = new Player(id, self.game, firebase, false);
           players.push(player);
         }
         
@@ -70,12 +75,12 @@ define(['Phaser',
 
         player.polygon.sides = data.sides;
         player.polygon.direction = direction;
-        player.draw();
+    //    player.draw();
       }
       else if (type === "Line") {
         position = new Phaser.Point(data.position.x, data.position.y);
         velocity = new Phaser.Point(data.velocity.x, data.velocity.y);
-        line = new Line(this.game, firebase, position.x, position.y);
+        line = new Line(self.game, firebase, position.x, position.y);
         line.setVelocity(data.velocity.x, data.velocity.y);
         line.sprite.body.velocity = velocity;
         lines.push(line);
@@ -122,4 +127,14 @@ define(['Phaser',
     });
 
   };
+
+  MainState.prototype.shutdown = function() {
+
+    alert('wer');
+  };
+  /** 
+   * export MainState
+   */
+  
+  return MainState;
 });
