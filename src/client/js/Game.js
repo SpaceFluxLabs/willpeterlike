@@ -13,7 +13,7 @@ define(['Phaser',
     ) {
   'use strict';
 
-  var firebase = new Firebase('https://jnks031h2o4.firebaseio-demo.com/users/jim'),
+  var firebase = new Firebase('https://blazing-fire-4029.firebaseio.com/users/jim'),
       players = [],
       lines = [],
       CANVAS_WIDTH = 800,
