@@ -7,6 +7,8 @@ define(function() {
     this.sides = sides;
     this.radius = radius;
     this.direction = 0;
+    this.speed = 100;
+    this.acceleration = 2.5;
   }
 
   Polygon.prototype.translate = function (dx, dy) {
@@ -35,5 +37,8 @@ define(function() {
     this.direction += theta;
   }
 
+  Polygon.prototype.setSpeed = function (speed) {
+    this.speed = speed;
+  }
   return Polygon;
 });

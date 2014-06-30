@@ -28,10 +28,11 @@ define(['PlayerInputComponent',
     });
 
     describe('.calcXVelocity', function() {
-      it('should be base velocity * cos (direction)', function() {
+      it('should be friction * speed * cos (direction)', function() {
         var x = component.calcXVelocity(player),
+            speed = player.polygon.speed,
             direction = player.polygon.direction,
-            expected = Component.BASE_VELOCITY * Math.cos(direction)
+            expected = Component.FRICTION * speed * Math.cos(direction)
         ;
 
         expect(x).toEqual(expected);
@@ -39,10 +40,11 @@ define(['PlayerInputComponent',
     });
 
     describe('.calcYVelocity', function() {
-      it('should be base velocity * sin (direction)', function() {
+      it('should be friction * speed * sin (direction)', function() {
         var y = component.calcYVelocity(player),
+            speed = player.polygon.speed,
             direction = player.polygon.direction,
-            expected = Component.BASE_VELOCITY * Math.sin(direction)
+            expected = Component.FRICTION * speed * Math.sin(direction)
         ;
 
         expect(y).toEqual(expected);
@@ -61,20 +63,31 @@ define(['PlayerInputComponent',
         isDownSpy = game.input.keyboard.isDown;
 
         player.velocity = jasmine.createSpy();
+        polygon.setSpeed = jasmine.createSpy();
         keys = Phaser.Keyboard;
         
       });
 
-      it('should have 0 velocity if W is not down', function() { 
+      it('should slow object by rate of acceleration if W is not down', function() {
         isDownSpy.and.callFake(function(key) {
+          if (key === keys.W) {
+            return true;
+          }
+        });         
+        
+        component.update(game, player);
+        tempVelocityX = player.velocity.x;
+        tempVelocityY = player.velocity.y;
+        
+         isDownSpy.and.callFake(function(key) {
           if (key === keys.W) {
             return false;
           }
-        });
-
-        component.update(game, player);
-        expect(player.velocity.x).toEqual(0);
-        expect(player.velocity.y).toEqual(0);
+         });
+         
+         component.update(game, player);
+         expect(tempVelocityX).toEqual(player.velocity.x * component.FRICTION);
+         expect(tempVelocityY).toEqual(player.velocity.y * component.FRICTION);
       });
 
       it('should set forward velocity if W is down', function() {
